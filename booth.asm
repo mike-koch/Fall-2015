@@ -2,12 +2,16 @@
 .186
 .STACK	100h
 .DATA
-Message		DB 'Hello World', 13, 10, '$'
+Message		DB 'Some message', 13, 10, '$'
 .CODE
+includelib UTIL
+extrn getdec:near
+extrn putdec:near
 Booth	PROC
 	mov cx, 15               ; 1. Initialize the loop counter to 15
-	mov bx, 6                ; 2. Place the multiplicand in the BX register (in this case, 6)
-	mov ax, 3                ; 3. Place the multiplier in the AX register (in this case, 3)
+	call getdec              ; Get a decimal value for the multiplicand
+	mov bx, ax               ; Move that value into ax
+	call getdec              ; Get a decimal value for the multiplier
 	mov dx, 0                ; 4. Initialize DX to zero
 	clc                      ; 5. Clear the carry flag
 	; STEP 6: Check LSB of Multiplier and CF
@@ -30,6 +34,7 @@ Booth	PROC
 			add bx, dx           ; Add the multiplicand from the high word of DX:AX
 			jmp BOTH_EQUAL
 	FINISH:
+		call putdec
 		mov ax, 4c00h
 		int 21h
 Booth	ENDP
