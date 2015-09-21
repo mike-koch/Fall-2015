@@ -17,9 +17,9 @@ Booth	PROC
 	; STEP 6: Check LSB of Multiplier and CF
 	PROCEDURE:
 		mov di, ax
-		rcl cx, 1                ; I need to do this weird rotate carry left and right to keep track of the carry bit, as the AND operation always sets CF to 0.
+		rcl si, 1                ; I need to do this weird rotate carry left and right to keep track of the carry bit, as the AND operation always sets CF to 0.
 		and di, 0001h            ; We're checking the least significant bit to see if it is 1 by ANDing the multiplier's LSB to with 1
-		rcr cx, 1                ; I need to do this weird rotate carry left and right to keep track of the carry bit, as the AND operation always sets CF to 0.
+		rcr si, 1                ; I need to do this weird rotate carry left and right to keep track of the carry bit, as the AND operation always sets CF to 0.
 		jz  LSB_0                ; Jump if the least significant bit was 0.
 		; Since we didn't jump, LSB = 1
 		jc  BOTH_EQUAL           ; If the carry flag is set, then both the LSB and the carry flag are = 1
