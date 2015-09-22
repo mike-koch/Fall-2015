@@ -2,21 +2,24 @@
 .186
 .STACK	100h
 .DATA
-MultiplicandPrompt		DB 'Enter Multiplicand: ', '$'
-MultiplierPrompt		DB 10, 13, 'Enter Multiplier: ', '$'
-ResultText				DB 10, 13, 'Result: ', '$'
+Prompt		DB "First Argument: Multiplicand, Second Arg: Multiplier, Outputs: Product", 10, 13, "$"
 .CODE
 includelib UTIL
 extrn getdec:near
 extrn putdec:near
 Booth	PROC
 	mov cx, 16
-	;mov dx, MultiplicandPrompt
-	;mov ah, 9
-	;int 0x21
+	
+	; Display prompt and get values
+	mov ax, @DATA
+	mov ds, ax
+	mov dx, offset Prompt
+	mov ah, 9
+	int 21h
 	call getdec
 	mov bx, ax
 	call getdec
+	
 	mov dx, 0
 	clc
 	; STEP 6: Check LSB of Multiplier and CF. Depending on the values of the LSB and CF, different operations will occur.
