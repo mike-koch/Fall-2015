@@ -2,38 +2,45 @@
 .186
 .STACK	100h
 .DATA
-Message		DB 'Some message', 13, 10, '$'
+MultiplicandPrompt		DB 'Enter Multiplicand: ', '$'
+MultiplierPrompt		DB 10, 13, 'Enter Multiplier: ', '$'
+ResultText				DB 10, 13, 'Result: ', '$'
 .CODE
 includelib UTIL
 extrn getdec:near
 extrn putdec:near
 Booth	PROC
-	mov cx, 16               ; 1. Initialize the loop counter to 16
-	call getdec              ; Get a decimal value for the multiplicand
-	mov bx, ax               ; Move that value into bx
-	call getdec              ; Get a decimal value for the multiplier
-	mov dx, 0                ; 4. Initialize DX to zero
-	clc                      ; 5. Clear the carry flag
-	; STEP 6: Check LSB of Multiplier and CF
+	mov cx, 16
+	;mov dx, MultiplicandPrompt
+	;mov ah, 9
+	;int 0x21
+	call getdec
+	mov bx, ax
+	call getdec
+	mov dx, 0
+	clc
+	; STEP 6: Check LSB of Multiplier and CF. Depending on the values of the LSB and CF, different operations will occur.
 	PROCEDURE:
 		mov di, ax
-		rcl si, 1                ; I need to do this weird rotate carry left and right to keep track of the carry bit, as the AND operation always sets CF to 0.
-		and di, 0001h            ; We're checking the least significant bit to see if it is 1 by ANDing the multiplier's LSB to with 1
-		rcr si, 1                ; I need to do this weird rotate carry left and right to keep track of the carry bit, as the AND operation always sets CF to 0.
-		jz  LSB_0                ; Jump if the least significant bit was 0.
-		; Since we didn't jump, LSB = 1
-		jc  BOTH_EQUAL           ; If the carry flag is set, then both the LSB and the carry flag are = 1
-		; Since we didn't jump, LSB = 1, CF = 0. Simply continue below
-		sub dx, bx               ; Subtract the multiplicand from the high word of DX:AX
+		; I'm rotating the carry bit into SI before the AND operation, as the AND operation will always clear the carry flag. I then rotate the carry bit back out of SI.
+		rcl si, 1
+		and di, 0001h
+		rcr si, 1
+		jz  LSB_0
+		jc  BOTH_EQUAL
+		; Step 8: Subtract BX from DX
+		sub dx, bx
 		BOTH_EQUAL:
-			sar dx, 1            ; Perform a 'shift arithmetic right' 1 to shift high word into DX into the low word of partial product DX:AX
-			rcr ax, 1            ; Rotate through carry the low bit 1 place to make it the new carry flag value
-			dec cx               ; Decrement the loop counter
-			jcxz FINISH          ; If cx is 0, let's exit the program
-			jmp PROCEDURE        ; Otherwise we'll perform another iteration
+			; Step 10: Shift DX right by 1 position, then shift AX right 1 through the carry bit.
+			sar dx, 1
+			rcr ax, 1
+			dec cx
+			jcxz FINISH
+			jmp PROCEDURE
 		LSB_0:
-			jnc BOTH_EQUAL       ; Jump if the least significant bit is 0 and the carry flag isn't set
-			add dx, bx           ; Add the multiplicand from the high word of DX:AX
+			jnc BOTH_EQUAL
+			; Step 9: Add BX to DX
+			add dx, bx
 			jmp BOTH_EQUAL
 	FINISH:
 		call putdec
