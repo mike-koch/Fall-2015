@@ -1,0 +1,2 @@
+This folder should contain routines for framing (putting two SYN characters, a LENGTH character and data into a frame)
+and deframing (separating those control characters from data characters).
