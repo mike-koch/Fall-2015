@@ -1,8 +1,9 @@
-cmake_minimum_required(VERSION 3.3)
-project(Transmitter_Receiver)
+cmake_minimum_required(VERSION 2.8)
+project(Transmitter)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
-set(SOURCE_FILES Transmitter.cpp Receiver.cpp)
+set(SOURCE_FILES
+    Transmitter.cpp)
 
-add_executable(Transmitter_Receiver ${SOURCE_FILES})
+add_executable(Transmitter ${SOURCE_FILES})
