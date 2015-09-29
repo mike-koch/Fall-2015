@@ -3,7 +3,7 @@
 //
 
 // Random file used to test various aspects of the application
-#include "TransmissionUtils.h"
+#include "physical/TransmissionUtils.h"
 #include <iostream>
 int main() {
     char *binary_value = new char[8];
