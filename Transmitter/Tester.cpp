@@ -6,7 +6,8 @@
 #include "physical/BinaryCalculator.h"
 #include <iostream>
 int main() {
-    char *message = convert_char_to_binary('a');
+    char *binary_value = new char[8];
+    char *message = convert_char_to_binary(binary_value, 'a');
 
     for (int i = 0; i < 8; i++) {
         std::cout << (int)message[i];

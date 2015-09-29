@@ -4,5 +4,5 @@
 
 #ifndef TRANSMITTER_BINARYCALCULATOR_H
 #define TRANSMITTER_BINARYCALCULATOR_H
-char* convert_char_to_binary(char character);
+char* convert_char_to_binary(char *binary_value, char character);
 #endif //TRANSMITTER_BINARYCALCULATOR_H
