@@ -3,7 +3,7 @@
 //
 
 // Random file used to test various aspects of the application
-#include "physical/BinaryCalculator.h"
+#include "TransmissionUtils.h"
 #include <iostream>
 int main() {
     char *binary_value = new char[8];

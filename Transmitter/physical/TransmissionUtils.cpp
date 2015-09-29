@@ -3,7 +3,7 @@
 //
 
 #include <stdlib.h>
-#include "BinaryCalculator.h"
+#include "TransmissionUtils.h"
 
 /**
  * Converts a single character into its binary value, stored in a char array. The array must be of size 8.
