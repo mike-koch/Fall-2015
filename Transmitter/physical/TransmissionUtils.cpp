@@ -39,7 +39,6 @@ Frame* build_frame(char *data, unsigned int offset, Frame *frame_to_populate) {
     unsigned int end_offset = get_end_offset(data, offset);
     unsigned int length = end_offset - offset;
 
-    char frame_data[length];
     for (int i = 0; i < length; i++) {
         frame_to_populate->data[i] = data[offset + i];
     }
