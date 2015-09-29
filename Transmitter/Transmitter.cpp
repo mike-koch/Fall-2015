@@ -27,8 +27,6 @@ int main(int argc, char *argv[])
     // At this point, setupSocket will be waiting for the client to connect, so nothing will execute below here until
     //     the client has connected.  Once the client connects, we can start transmitting.
 
-    if( newsockfd < 0 )
-        error("ERROR on accept");
     bzero(buffer,256);
     n = read(newsockfd,buffer,255);
     if( n < 0 )
@@ -58,6 +56,8 @@ void setupSocket(char *const *argv, int sockfd, int newsockfd, int portno, int &
     newsockfd = accept(sockfd,
                        (struct sockaddr *) &cli_addr,
                        (socklen_t *) &clilen);
+    if( newsockfd < 0 )
+        error("ERROR on accept");
 }
 
 void error( char *msg ) {
