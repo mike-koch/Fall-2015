@@ -7,6 +7,7 @@
 #include <string.h>
 #include <iostream>
 #include <fstream>
+#include "app/FileManager.h"
 
 using namespace std;
 
@@ -15,7 +16,7 @@ void check_args(int argc);
 void setup_socket(char *const *argv, int &sockfd, int &newsockfd, int &portno, int &clilen, sockaddr_in &serv_addr,
                   sockaddr_in &cli_addr);
 
-int main(int argc, char *argv[])
+int main1(int argc, char *argv[])
 {
     int sockfd, newsockfd, portno, clilen;
     char buffer[256];
@@ -30,7 +31,8 @@ int main(int argc, char *argv[])
     //     the client has connected.  Once the client connects, we can start transmitting.
 
     // For now, we'll just transmit a sample file. No need for anything fancy
-    char* message = "Message";
+    const char* message =
+            retrieve_file_to_transmit("/home/mkoch/ClionProjects/Transmitter-Receiver/Transmitter/sample-input.txt");
     cout << message << endl;
 
     n = write(newsockfd,message,18);
