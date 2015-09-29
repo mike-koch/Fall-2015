@@ -8,6 +8,8 @@
       <sourceFolder url="file://$MODULE_DIR$/app/FileManager.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/app/FileManager.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/error/ErrorCodes.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/physical/BinaryCalculator.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/physical/BinaryCalculator.h" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
