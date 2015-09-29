@@ -4,10 +4,18 @@
 
 #ifndef TRANSMITTER_FRAME_H
 #define TRANSMITTER_FRAME_H
+
+#include <string.h>
+
+static char SYN = 22;
 struct Frame {
-    char first_syn = 22;
-    char second_syn = 22;
-    int length;
-    char* data;
+
+    char first_syn = SYN;
+    char second_syn = SYN;
+    char data[64];
+
+    unsigned int get_length() {
+        return strlen(data);
+    }
 };
 #endif //TRANSMITTER_FRAME_H

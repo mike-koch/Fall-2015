@@ -8,5 +8,10 @@
 #include <string.h>
 int main() {
     char *my_string = "foo bar8901234567890";
-    std::cout << strlen(my_string) << std::endl;
+    Frame *my_frame = new Frame();
+    build_frame(my_string, 0, my_frame);
+    std::cout << "Syn character: " << my_frame->first_syn << std::endl;
+    std::cout << "Second syn character: " << my_frame->second_syn << std::endl;
+    std::cout << "Length: " << my_frame->get_length() << std::endl;
+    std::cout << "Data: " << my_frame->data << std::endl;
 }
