@@ -1,8 +1,6 @@
 //
 // Created by mkoch on 9/29/15.
 //
-
-#include <stdlib.h>
 #include "TransmissionUtils.h"
 
 /**
@@ -18,13 +16,24 @@ char* convert_char_to_binary(char *binary_value, char character) {
     return binary_value;
 }
 
-int calculate_parity_bit(char *binary_value) {
+void append_parity_bit(char &character) {
     // The parity bit is calculated via a simple XOR across all of the bits, followed by swapping the 1 to a 0
     // (or vice-versa).
-    int parity_bit = 0;
-    for (int i = 0; i < 8; i++) {
-        parity_bit ^= binary_value[i];
+    int parity_bit = 1;
+    for (int i = 0; i < 7; i++) {
+        parity_bit ^= (character << i);
     }
 
-    return !parity_bit;
+    if (parity_bit == 1) {
+        character |= (1 << 7);
+    }
+}
+
+// Takes a char array of the data to be framed, starting at the current offset. Returns the same frame that is passed
+//    in, but populated.
+Frame* build_frame(char *data, int offset, Frame *frame_to_populate) {
+
+
+    return frame_to_populate;
+    //--
 }
