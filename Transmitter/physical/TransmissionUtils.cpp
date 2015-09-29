@@ -17,3 +17,14 @@ char* convert_char_to_binary(char *binary_value, char character) {
     }
     return binary_value;
 }
+
+int calculate_parity_bit(char *binary_value) {
+    // The parity bit is calculated via a simple XOR across all of the bits, followed by swapping the 1 to a 0
+    // (or vice-versa).
+    int parity_bit = 0;
+    for (int i = 0; i < 8; i++) {
+        parity_bit ^= binary_value[i];
+    }
+
+    return !parity_bit;
+}
