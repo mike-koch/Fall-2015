@@ -3,9 +3,8 @@
 //
 
 // Random file used to test various aspects of the application
-#include "physical/TransmissionUtils.h"
+#include "datalink/Framing.h"
 #include <iostream>
-#include <string.h>
 int main() {
     char *my_string = "foo bar8901234567890";
     Frame *my_frame = new Frame();

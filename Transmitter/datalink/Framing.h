@@ -1,0 +1,11 @@
+//
+// Created by mkoch on 9/29/15.
+//
+
+#ifndef TRANSMITTER_FRAMING_H
+#define TRANSMITTER_FRAMING_H
+
+#include "Frame.h"
+
+Frame* build_frame(char *data, unsigned int offset, Frame *frame_to_populate);
+#endif //TRANSMITTER_FRAMING_H

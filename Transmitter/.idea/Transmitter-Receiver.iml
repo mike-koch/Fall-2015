@@ -7,8 +7,10 @@
       <sourceFolder url="file://$MODULE_DIR$/Transmitter.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/app/FileManager.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/app/FileManager.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/datalink/Framing.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/datalink/Framing.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/error/ErrorCodes.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/physical/Frame.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/datalink/Frame.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/physical/TransmissionUtils.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/physical/TransmissionUtils.h" isTestSource="false" />
     </content>
