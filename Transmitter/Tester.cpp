@@ -3,11 +3,12 @@
 //
 
 // Random file used to test various aspects of the application
-#include "app/FileManager.h"
+#include "physical/BinaryCalculator.h"
 #include <iostream>
 int main() {
-    const char* message =
-            retrieve_file_to_transmit("/home/mkoch/ClionProjects/Transmitter-Receiver/Transmitter/sample-input.txt");
+    char *message = convert_char_to_binary('a');
 
-    std::cout << message << std::endl;
+    for (int i = 0; i < 8; i++) {
+        std::cout << (int)message[i];
+    }
 }
