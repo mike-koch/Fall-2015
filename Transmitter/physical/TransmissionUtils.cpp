@@ -55,4 +55,6 @@ int get_end_offset(char *data, unsigned int offset) {
     if (length_to_process > length_of_data) {
         return length_of_data;
     }
+
+    return length_to_process;
 }
