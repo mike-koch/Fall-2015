@@ -8,7 +8,7 @@
 #include <netdb.h>
 
 void check_args(int argc, char *argv[]);
-void connect_to_server(int portno, char *argv[], int sockfd, hostent *server, sockaddr_in &serv_addr);
+void connect_to_server(int &portno, char *argv[], int &sockfd, hostent *server, sockaddr_in &serv_addr);
 void error(char *msg) {
     perror(msg);
     exit(0);
@@ -38,7 +38,7 @@ void check_args(int argc, char *argv[]) {
     }
 }
 
-void connect_to_server(int portno, char *argv[], int sockfd, hostent *server, sockaddr_in &serv_addr) {
+void connect_to_server(int &portno, char *argv[], int &sockfd, hostent *server, sockaddr_in &serv_addr) {
     portno = atoi(argv[2]);
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
     if( sockfd < 0 )
