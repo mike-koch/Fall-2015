@@ -14,7 +14,7 @@ struct Frame {
     char second_syn = SYN;
     char data[64];
 
-    unsigned int get_length() {
+    unsigned char get_length() {
         return strlen(data);
     }
 };
