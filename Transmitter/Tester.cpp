@@ -16,5 +16,5 @@ int main() {
     std::cout << "Length (int): " << (int)my_frame->length << std::endl;
     std::cout << "Length (char): " << my_frame->length << std::endl;
     std::cout << "Data: " << my_frame->data << std::endl;
-    send(my_frame, SendMode::CONSOLE);
+    send(my_frame, SendMode::CONSOLE, -1);
 }

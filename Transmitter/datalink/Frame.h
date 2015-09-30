@@ -7,7 +7,7 @@
 
 #include <string.h>
 
-static char SYN = 23;
+const char SYN = 22;
 struct Frame {
 
     char first_syn = SYN;
