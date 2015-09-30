@@ -1,16 +1,17 @@
 //
 // Created by mkoch on 9/29/15.
 //
+#define DEBUG
 #include <string.h>
 #include <iostream>
-#include <stdlib.h>
 #include <bitset>
 #include "TransmissionUtils.h"
-#include "../enum/SendMode.h"
+#ifndef DEBUG
+#include <stdlib.h>
 #include "../enum/ErrorCodes.h"
-#define DEBUG
+#endif
 
-bool check_bit(char &character, int position);
+int check_bit(char &character, int position);
 
 /**
  * Converts a single character into its binary value, stored in a char array. The array must be of size 8.
@@ -46,21 +47,16 @@ void append_parity_bit(char &character) {
     return;
 }
 
-bool check_bit(char &character, int position) {
+int check_bit(char &character, int position) {
     return character & (1<<(position));
 }
 
-void send(Frame *frame_to_send, SendMode send_mode) {
+void send(Frame *frame_to_send, SendMode send_mode, int &newsockfd) {
     if (send_mode == SendMode::CONSOLE) {
 #ifndef DEBUG
         std::cout << "ERROR: Console is not allowed unless in DEBUG mode";
         exit(ERROR_CONSOLE_NOT_ALLOWED_UNLESS_IN_DEBUG);
 #endif
-        // 1st SYN character: add parity bit
-        // 2nd SYN character: add parity bit
-        // LENGTH  character: add parity bit
-        // data: For each byte, add parity bit.
-        // output bit representation of SYN (1), SYN (2), LENGTH, and each byte in data
         append_parity_bit(frame_to_send->first_syn);
         append_parity_bit(frame_to_send->second_syn);
         append_parity_bit(frame_to_send->length);
