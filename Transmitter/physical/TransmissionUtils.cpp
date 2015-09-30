@@ -4,10 +4,14 @@
 #include <string.h>
 #include <iostream>
 #include <stdlib.h>
+#include <bitset>
 #include "TransmissionUtils.h"
 #include "../enum/SendMode.h"
 #include "../enum/ErrorCodes.h"
 #define DEBUG
+
+bool check_bit(char &character, int position);
+
 /**
  * Converts a single character into its binary value, stored in a char array. The array must be of size 8.
  *
@@ -29,15 +33,21 @@ void append_parity_bit(char &character) {
     // (or vice-versa).
     int parity_bit = 1;
     for (int i = 0; i < 7; i++) {
-        parity_bit ^= (character << i);
+        parity_bit ^= check_bit(character, i);
     }
 
     if (parity_bit == 1) {
         character |= (1 << 7);
     }
 #ifdef DEBUG
-    std::cout << "After parity (int): " << (int)character << std::endl;
+    std::cout << "After parity (int): " << (int)(uint8_t)character << std::endl;
 #endif
+
+    return;
+}
+
+bool check_bit(char &character, int position) {
+    return character & (1<<(position));
 }
 
 void send(Frame *frame_to_send, SendMode send_mode) {
@@ -54,7 +64,7 @@ void send(Frame *frame_to_send, SendMode send_mode) {
         append_parity_bit(frame_to_send->first_syn);
         append_parity_bit(frame_to_send->second_syn);
         append_parity_bit(frame_to_send->length);
-        for (int i = 0; i < frame_to_send->length; i++) {
+        for (int i = 0; i < strlen(frame_to_send->data); i++) {
             append_parity_bit(frame_to_send->data[i]);
         }
     } else {
