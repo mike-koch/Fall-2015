@@ -13,9 +13,6 @@ struct Frame {
     char first_syn = SYN;
     char second_syn = SYN;
     char data[64];
-
-    unsigned char get_length() {
-        return strlen(data);
-    }
+    char length;
 };
 #endif //TRANSMITTER_FRAME_H
