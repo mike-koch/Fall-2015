@@ -73,7 +73,7 @@ void send(Frame *frame_to_send, SendMode send_mode, int newsockfd) {
     char output_message[get_output_size(data_length)];
     append_char_to_output(output_message, frame_to_send->first_syn, 0);
     append_char_to_output(output_message, frame_to_send->second_syn, 8);
-    append_char_to_output(output_message, data_length, 16);
+    append_char_to_output(output_message, frame_to_send->length, 16);
 
     for (int i = 0; i < data_length; i++) {
         append_char_to_output(output_message, frame_to_send->data[i], 24 + (8 * i));
@@ -104,6 +104,11 @@ unsigned int get_output_size(unsigned int data_length) {
 
 void output_to_console(char message[], unsigned int length) {
     for (int i = 0; i < length; i++) {
+        if (i == 8 || i == 16 || i == 24) {
+            std::cout << "|";
+        } else if (i % 8 == 0 && i != 0) {
+            std::cout << "_";
+        }
         std::cout << (int)message[i];
     }
 }
