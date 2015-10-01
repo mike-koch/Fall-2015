@@ -38,6 +38,7 @@ int main(int argc, char *argv[])
         Frame *frame = new Frame();
         build_frame(message, i, frame);
         send(frame, SendMode::SOCKET, newsockfd);
+        delete frame;
     }
 
     close(newsockfd);
