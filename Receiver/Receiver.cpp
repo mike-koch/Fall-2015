@@ -6,6 +6,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <netdb.h>
+#include "physical/TransmissionUtils.h"
 
 void check_args(int argc, char *argv[]);
 void connect_to_server(int &portno, char *argv[], int &sockfd, hostent *server, sockaddr_in &serv_addr);
@@ -20,14 +21,10 @@ int main(int argc, char *argv[])
     struct sockaddr_in serv_addr;
     struct hostent *server;
 
-    char buffer[256];
     check_args(argc, argv);
     connect_to_server(portno, argv, sockfd, server, serv_addr);
 
-    n = read(sockfd,buffer,255);
-    if( n < 0 )
-        error("ERROR reading from socket");
-    printf("%s\n",buffer);
+    read(sockfd);
 
     return 0;
 }
