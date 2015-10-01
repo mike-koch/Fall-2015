@@ -7,5 +7,5 @@
 
 #include "Frame.h"
 
-Frame* build_frame(char *data, unsigned int offset, Frame *frame_to_populate);
+Frame* build_frame(const char *data, unsigned int offset, Frame *frame_to_populate);
 #endif //TRANSMITTER_FRAMING_H

@@ -7,7 +7,7 @@
 #include "physical/TransmissionUtils.h"
 #include "enum/SendMode.h"
 #include <iostream>
-int main() {
+int main2() {
     char *my_string = "foo bar89012345678901234567890123";
     Frame *my_frame = new Frame();
     build_frame(my_string, 0, my_frame);

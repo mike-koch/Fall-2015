@@ -6,8 +6,9 @@
 #include <unistd.h>
 #include <string.h>
 #include <iostream>
-#include <fstream>
 #include "app/FileManager.h"
+#include "datalink/Framing.h"
+#include "physical/TransmissionUtils.h"
 
 using namespace std;
 
@@ -16,7 +17,7 @@ void check_args(int argc);
 void setup_socket(char *const *argv, int &sockfd, int &newsockfd, int &portno, int &clilen, sockaddr_in &serv_addr,
                   sockaddr_in &cli_addr);
 
-int main1(int argc, char *argv[])
+int main(int argc, char *argv[])
 {
     int sockfd, newsockfd, portno, clilen;
     char buffer[256];
@@ -33,11 +34,14 @@ int main1(int argc, char *argv[])
     // For now, we'll just transmit a sample file. No need for anything fancy
     const char* message =
             retrieve_file_to_transmit("/home/mkoch/ClionProjects/Transmitter-Receiver/Transmitter/sample-input.txt");
-    cout << message << endl;
+    for (unsigned int i = 0; i < strlen(message); i += 64) {
+        Frame *frame = new Frame();
+        build_frame(message, i, frame);
+        send(frame, SendMode::SOCKET, newsockfd);
+    }
 
-    n = write(newsockfd,message,18);
-    if( n < 0 )
-        error("ERROR writing to socket");
+    close(newsockfd);
+    
     return 0;
 }
 

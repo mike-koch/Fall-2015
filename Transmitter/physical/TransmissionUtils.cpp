@@ -5,7 +5,10 @@
 #include <string.h>
 #include <iostream>
 #include <bitset>
+#include <unistd.h>
 #include "TransmissionUtils.h"
+#include "../enum/ErrorCodes.h"
+#include <fstream>
 #ifndef DEBUG
 #include <stdlib.h>
 #include "../enum/ErrorCodes.h"
@@ -17,9 +20,9 @@ void append_parity_bits(Frame *frame_to_send, unsigned int data_length);
 
 unsigned int get_output_size(unsigned int data_length);
 
-void append_array_to_output(char output_message[], char binary_value_for_char[8], unsigned int starting_index);
-
 void output_to_console(char message[], unsigned int length);
+
+void send_through_socket(char message[], unsigned int size, int newsockfd);
 
 /**
  * Converts a single character into its binary value and appended to the output.
@@ -81,6 +84,8 @@ void send(Frame *frame_to_send, SendMode send_mode, int newsockfd) {
 
     if (send_mode == SendMode::CONSOLE) {
         output_to_console(output_message, get_output_size(data_length));
+    } else {
+        send_through_socket(output_message, get_output_size(data_length), newsockfd);
     }
 }
 
@@ -110,5 +115,13 @@ void output_to_console(char message[], unsigned int length) {
             std::cout << "_";
         }
         std::cout << (int)message[i];
+    }
+}
+
+void send_through_socket(char message[], unsigned int size, int newsockfd) {
+    int n = write(newsockfd, message, size);
+    if (n < 0) {
+        perror("ERROR: Unable to write to socket");
+        exit(ERROR_UNABLE_TO_WRITE_TO_SOCKET);
     }
 }
