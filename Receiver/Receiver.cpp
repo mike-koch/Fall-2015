@@ -14,6 +14,7 @@ void error(char *msg) {
     perror(msg);
     exit(0);
 }
+bool socket_is_alive(int sockfd);
 
 int main(int argc, char *argv[])
 {
@@ -24,9 +25,20 @@ int main(int argc, char *argv[])
     check_args(argc, argv);
     connect_to_server(portno, argv, sockfd, server, serv_addr);
 
-    read(sockfd);
+    while (socket_is_alive(sockfd)) {
+        read(sockfd);
+    }
 
     return 0;
+}
+
+bool socket_is_alive(int sockfd) {
+    char buffer[1];
+    ssize_t received = recv(sockfd, buffer, 1, MSG_PEEK);
+    if (received < 0) {
+        error("ERROR");
+    }
+    return received;
 }
 
 void check_args(int argc, char *argv[]) {

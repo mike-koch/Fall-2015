@@ -39,7 +39,7 @@ char* append_char_to_output(char *binary_value, char character, unsigned int sta
 
 void append_parity_bit(char &character) {
 #ifdef DEBUG
-    std::cout << "Before parity (int): " << (int)character << std::endl;
+    //std::cout << "Before parity (int): " << (int)character << std::endl;
 #endif
     // The parity bit is calculated via a simple XOR across all of the bits, followed by swapping the 1 to a 0
     // (or vice-versa).
@@ -52,7 +52,7 @@ void append_parity_bit(char &character) {
         character |= (1 << 7);
     }
 #ifdef DEBUG
-    std::cout << "After parity (int): " << (int)(uint8_t)character << std::endl;
+    //std::cout << "After parity (int): " << (int)(uint8_t)character << std::endl;
 #endif
 
     return;
@@ -116,6 +116,7 @@ void output_to_console(char message[], unsigned int length) {
         }
         std::cout << (int)message[i];
     }
+    std::cout << std::endl;
 }
 
 void send_through_socket(char message[], unsigned int size, int newsockfd) {

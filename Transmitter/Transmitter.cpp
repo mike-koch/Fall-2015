@@ -32,11 +32,11 @@ int main(int argc, char *argv[])
     //     the client has connected.  Once the client connects, we can start transmitting.
 
     // For now, we'll just transmit a sample file. No need for anything fancy
-    const char* message =
-            retrieve_file_to_transmit("/home/mkoch/ClionProjects/Transmitter-Receiver/Transmitter/sample-input.txt");
-    for (unsigned int i = 0; i < strlen(message); i += 64) {
+    std::string message =
+            retrieve_file_to_transmit("/home/mkoch/ClionProjects/Transmitter-Receiver/Transmitter/lorem-ipsum.txt");
+    for (unsigned int i = 0; i < strlen(message.c_str()); i += 64) {
         Frame *frame = new Frame();
-        build_frame(message, i, frame);
+        build_frame(message.c_str(), i, frame);
         send(frame, SendMode::SOCKET, newsockfd);
         delete frame;
     }
