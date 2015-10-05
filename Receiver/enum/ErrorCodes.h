@@ -1,7 +1,3 @@
-//
-// Created by mkoch on 10/1/15.
-//
-
 #ifndef RECEIVER_ERRORCODES_H
 #define RECEIVER_ERRORCODES_H
 //

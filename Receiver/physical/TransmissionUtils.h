@@ -1,7 +1,3 @@
-//
-// Created by mkoch on 10/1/15.
-//
-
 #ifndef RECEIVER_TRANSMISSIONUTILS_H
 #define RECEIVER_TRANSMISSIONUTILS_H
 #include <stdio.h>

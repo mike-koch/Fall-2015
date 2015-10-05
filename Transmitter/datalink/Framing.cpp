@@ -1,7 +1,3 @@
-//
-// Created by mkoch on 9/29/15.
-//
-
 #include "Framing.h"
 int get_end_offset(const char *data, unsigned int offset);
 

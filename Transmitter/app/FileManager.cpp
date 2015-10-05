@@ -1,7 +1,6 @@
 #include "FileManager.h"
 #include <fstream>
 #include <sstream>
-#include <stdlib.h>
 #include <iostream>
 #include "../enum/ErrorCodes.h"
 std::string retrieve_file_to_transmit(char *file_path) {

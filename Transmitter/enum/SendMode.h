@@ -1,7 +1,3 @@
-//
-// Created by mkoch on 9/29/15.
-//
-
 #ifndef TRANSMITTER_SENDMODE_H
 #define TRANSMITTER_SENDMODE_H
 enum SendMode {

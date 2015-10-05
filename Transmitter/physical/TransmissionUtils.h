@@ -1,7 +1,3 @@
-//
-// Created by mkoch on 9/29/15.
-//
-
 #ifndef TRANSMITTER_BINARYCALCULATOR_H
 #define TRANSMITTER_BINARYCALCULATOR_H
 

@@ -1,6 +1,3 @@
-//
-// Created by mkoch on 9/29/15.
-//
 //#define DEBUG
 #include <string.h>
 #include <iostream>

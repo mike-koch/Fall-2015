@@ -1,7 +1,3 @@
-//
-// Created by mkoch on 9/29/15.
-//
-
 // Random file used to test various aspects of the application
 #include "datalink/Framing.h"
 #include "physical/TransmissionUtils.h"

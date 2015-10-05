@@ -1,7 +1,3 @@
-//
-// Created by mkoch on 10/1/15.
-//
-
 #include "TransmissionUtils.h"
 #include "../enum/ErrorCodes.h"
 void check_for_socket_error(int n);

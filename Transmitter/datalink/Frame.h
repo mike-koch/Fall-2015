@@ -1,7 +1,3 @@
-//
-// Created by mkoch on 9/29/15.
-//
-
 #ifndef TRANSMITTER_FRAME_H
 #define TRANSMITTER_FRAME_H
 
