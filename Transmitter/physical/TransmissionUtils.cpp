@@ -1,7 +1,7 @@
 //
 // Created by mkoch on 9/29/15.
 //
-#define DEBUG
+//#define DEBUG
 #include <string.h>
 #include <iostream>
 #include <bitset>
@@ -11,7 +11,6 @@
 #include <fstream>
 #ifndef DEBUG
 #include <stdlib.h>
-#include "../enum/ErrorCodes.h"
 #endif
 
 bool check_bit(char &character, int position);
@@ -52,7 +51,7 @@ void append_parity_bit(char &character) {
         character |= (1 << 7);
     }
 #ifdef DEBUG
-    //std::cout << "After parity (int): " << (int)(uint8_t)character << std::endl;
+    std::cout << "After parity (int): " << (int)(uint8_t)character << std::endl;
 #endif
 
     return;

@@ -9,7 +9,7 @@
 #include "physical/TransmissionUtils.h"
 
 void check_args(int argc, char *argv[]);
-void connect_to_server(int &portno, char *argv[], int &sockfd, hostent *server, sockaddr_in &serv_addr);
+void connect_to_server(char *argv[], int &sockfd);
 void error(char *msg) {
     perror(msg);
     exit(0);
@@ -18,12 +18,10 @@ bool socket_is_alive(int sockfd);
 
 int main(int argc, char *argv[])
 {
-    int sockfd, portno, n;
-    struct sockaddr_in serv_addr;
-    struct hostent *server;
+    int sockfd;
 
     check_args(argc, argv);
-    connect_to_server(portno, argv, sockfd, server, serv_addr);
+    connect_to_server(argv, sockfd);
 
     while (socket_is_alive(sockfd)) {
         read(sockfd);
@@ -48,12 +46,13 @@ void check_args(int argc, char *argv[]) {
     }
 }
 
-void connect_to_server(int &portno, char *argv[], int &sockfd, hostent *server, sockaddr_in &serv_addr) {
-    portno = atoi(argv[2]);
+void connect_to_server(char *argv[], int &sockfd) {
+    struct sockaddr_in serv_addr;
+
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
     if( sockfd < 0 )
         error("ERROR opening socket");
-    server = gethostbyname(argv[1]);
+    hostent *server = gethostbyname(argv[1]);
     if( server == NULL )
     {
         fprintf(stderr,"ERROR, no such host\n");
@@ -64,7 +63,7 @@ void connect_to_server(int &portno, char *argv[], int &sockfd, hostent *server, 
     bcopy(server->h_addr,
           (char *)&serv_addr.sin_addr.s_addr,
           server->h_length);
-    serv_addr.sin_port = htons(portno);
+    serv_addr.sin_port = htons(atoi(argv[2]));
     if( connect(sockfd, (const sockaddr *) &serv_addr,sizeof(serv_addr)) < 0 )
         error("ERROR connecting");
 }
