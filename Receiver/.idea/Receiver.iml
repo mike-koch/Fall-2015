@@ -4,8 +4,6 @@
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/CMakeLists.txt" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Receiver.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/datalink/Framing.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/datalink/Framing.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/enum/ErrorCodes.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/physical/TransmissionUtils.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/physical/TransmissionUtils.h" isTestSource="false" />

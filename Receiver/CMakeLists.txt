@@ -4,6 +4,6 @@ project(Receiver)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 set(SOURCE_FILES
-    Receiver.cpp physical/TransmissionUtils.cpp physical/TransmissionUtils.h datalink/Framing.cpp datalink/Framing.h enum/ErrorCodes.h)
+    Receiver.cpp physical/TransmissionUtils.cpp physical/TransmissionUtils.h enum/ErrorCodes.h)
 
 add_executable(Receiver ${SOURCE_FILES})
