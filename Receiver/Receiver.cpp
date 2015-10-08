@@ -1,11 +1,8 @@
 #include <stdio.h>
-#include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
-#include <unistd.h>
 #include <string.h>
 #include <stdlib.h>
-#include <netdb.h>
 #include "physical/TransmissionUtils.h"
 
 void check_args(int argc);
@@ -37,7 +34,7 @@ bool socket_is_alive(int sockfd) {
     char buffer[1];
     ssize_t received = recv(sockfd, buffer, 1, MSG_PEEK);
     if (received < 0) {
-        error("ERROR");
+        error("An error occurred when trying to check if the socket was still alive.");
     }
     return received;
 }
@@ -45,7 +42,8 @@ bool socket_is_alive(int sockfd) {
 
 void check_args(int argc) {
     if( argc < 2 ) {
-        fprintf(stderr,"ERROR, no port provided\n");
+        std::cerr << "ERROR: No port provided!" << std::endl;
+        std::cout << "Usage: Receiver [port]\nNote: If you wish to output to a file, you should pipe Receiver's output to your file." << std::endl;
         exit(1);
     }
 }
