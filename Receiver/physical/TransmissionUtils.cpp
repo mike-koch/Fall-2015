@@ -1,6 +1,8 @@
 #include "TransmissionUtils.h"
 #include "../enum/ErrorCodes.h"
+#include "../datalink/Framing.h"
 void check_for_socket_error(int n);
+void output_frame_contents(Frame &frame);
 
 void read(int sockfd) {
     int length = read_for_length(sockfd);
@@ -17,7 +19,10 @@ void read(int sockfd) {
     }
     std::cout << std::endl;
 #endif
-    output_buffer(buffer, length_of_buffer);
+    Frame frame;
+    build_frame(frame, length, buffer);
+
+    output_frame_contents(frame);
 }
 
 // Read the message received. This will look for two SYN characters, and then will return the next character,
@@ -86,17 +91,9 @@ void strip_parity_bit(char &character) {
     character &= ~(1 << 7);
 }
 
-void output_buffer(char *buffer, int length_of_buffer) {
-    //    1. Call get_parsed_character with the corresponding offset
-    //    2. Strip the parity bit via strip_parity_bit
-    //    3. Output to the console
-    for (int i = 0; i < length_of_buffer; i += 8) {
-        char next_byte[8];
-        get_next_eight_bits(buffer, next_byte, i);
-
-        char parsed_character = get_parsed_character(next_byte);
-        strip_parity_bit(parsed_character);
-        std::cout << parsed_character;
+void output_frame_contents(Frame &frame) {
+    for (int i = 0; i < frame.length; i++) {
+        std::cout << frame.data[i];
     }
 }
 
