@@ -6,10 +6,18 @@ void output_frame_contents(Frame *frame);
 
 void read(int sockfd) {
     int length = read_for_length(sockfd);
+    int current_bytes_read = 0;
 
     int length_of_buffer = length * 8;
     char buffer[length_of_buffer];
-    read(sockfd, buffer, (size_t)length_of_buffer);
+
+    while (true) {
+        current_bytes_read += read(sockfd, buffer + current_bytes_read, (size_t)length_of_buffer - current_bytes_read);
+        if (current_bytes_read == length_of_buffer) {
+            break;
+        }
+    }
+
 #ifdef DEBUG
     for (int i = 0; i < length_of_buffer; i++) {
         if (i != 0 && i % 8 == 0) {
@@ -41,8 +49,13 @@ int read_for_length(int sockfd) {
     char character = get_parsed_character(buffer);
     if (character == 22) {
         // Get the next character. If it's also a SYN character, the next must be the length
-        n = read(sockfd, buffer, (size_t)8);
-        check_for_socket_error(n);
+        while (true) {
+            n = read(sockfd, buffer, (size_t)8);
+            check_for_socket_error(n);
+            if (n > 0) {
+                break;
+            }
+        }
 #ifdef DEBUG
         for (int i = 0; i < 8; i++) {
             std::cout << (int)(uint8_t)buffer[i];
@@ -52,8 +65,13 @@ int read_for_length(int sockfd) {
         character = get_parsed_character(buffer);
         if (character == 22) {
             // Next is the length
-            n = read(sockfd, buffer, (size_t)8);
-            check_for_socket_error(n);
+            while (true) {
+                n = read(sockfd, buffer, (size_t)8);
+                check_for_socket_error(n);
+                if (n > 0) {
+                    break;
+                }
+            }
 #ifdef DEBUG
             for (int i = 0; i < 8; i++) {
                 std::cout << (int)(uint8_t)buffer[i];
