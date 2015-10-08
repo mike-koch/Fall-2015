@@ -10,7 +10,6 @@ void read(int sockfd) {
     int length_of_buffer = length * 8;
     char buffer[length_of_buffer];
     read(sockfd, buffer, (size_t)length_of_buffer);
-    //std::cout << "Read the contents of the file descriptor" << std::endl;
 #ifdef DEBUG
     for (int i = 0; i < length_of_buffer; i++) {
         if (i != 0 && i % 8 == 0) {
