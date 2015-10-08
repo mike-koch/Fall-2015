@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
     connect_to_server(argv, sockfd);
 
     std::string message =
-            retrieve_file_to_transmit("/home/mkoch/ClionProjects/Transmitter-Receiver/Transmitter/lorem-ipsum.txt");
+            retrieve_file_to_transmit(argv[3]);
     for (unsigned int i = 0; i < strlen(message.c_str()); i += 64) {
         Frame *frame = new Frame();
         build_frame(message.c_str(), i, frame);
