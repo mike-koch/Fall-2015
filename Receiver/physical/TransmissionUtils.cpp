@@ -2,7 +2,7 @@
 #include "../enum/ErrorCodes.h"
 #include "../datalink/Framing.h"
 void check_for_socket_error(int n);
-void output_frame_contents(Frame &frame);
+void output_frame_contents(Frame *frame);
 
 void read(int sockfd) {
     int length = read_for_length(sockfd);
@@ -10,6 +10,7 @@ void read(int sockfd) {
     int length_of_buffer = length * 8;
     char buffer[length_of_buffer];
     read(sockfd, buffer, length_of_buffer);
+    //std::cout << "Read the contents of the file descriptor" << std::endl;
 #ifdef DEBUG
     for (int i = 0; i < length_of_buffer; i++) {
         if (i != 0 && i % 8 == 0) {
@@ -19,10 +20,10 @@ void read(int sockfd) {
     }
     std::cout << std::endl;
 #endif
-    Frame frame;
+    Frame *frame = new Frame();
     build_frame(frame, length, buffer);
-
     output_frame_contents(frame);
+    delete frame;
 }
 
 // Read the message received. This will look for two SYN characters, and then will return the next character,
@@ -91,9 +92,9 @@ void strip_parity_bit(char &character) {
     character &= ~(1 << 7);
 }
 
-void output_frame_contents(Frame &frame) {
-    for (int i = 0; i < frame.length; i++) {
-        std::cout << frame.data[i];
+void output_frame_contents(Frame *frame) {
+    for (int i = 0; i < frame->length; i++) {
+        std::cout << frame->data[i];
     }
 }
 

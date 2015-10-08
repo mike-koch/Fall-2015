@@ -3,8 +3,8 @@
 //
 
 #include "Framing.h"
-void build_frame(Frame &frame, int length, char *data) {
-    frame.length = length;
+void build_frame(Frame *frame, int length, char *data) {
+    frame->length = length;
 
     char parsed_data[length];
     for (int i = 0; i < length; i++) {
@@ -14,5 +14,5 @@ void build_frame(Frame &frame, int length, char *data) {
         strip_parity_bit(parsed_character);
         parsed_data[i] = parsed_character;
     }
-    strcpy(frame.data, parsed_data);
+    strcpy(frame->data, parsed_data);
 }
