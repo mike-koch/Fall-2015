@@ -1,7 +1,6 @@
 #include "TransmissionUtils.h"
 #include "../enum/ErrorCodes.h"
 void check_for_socket_error(int n);
-char get_parsed_character(char *character);
 
 void read(int sockfd) {
     int length = read_for_length(sockfd);
