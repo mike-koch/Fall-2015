@@ -4,10 +4,6 @@
 
 #include "Framing.h"
 void build_frame(Frame &frame, int length, char *data) {
-    const char SYN = 22;
-
-    frame.first_syn = SYN;
-    frame.second_syn = SYN;
     frame.length = length;
 
     char parsed_data[length];
