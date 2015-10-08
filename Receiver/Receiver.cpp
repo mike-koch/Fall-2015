@@ -7,7 +7,7 @@
 
 void check_args(int argc);
 void setup_socket(char *const *argv, int &newsockfd);
-void error(char *msg) {
+void error(const char *msg) {
     perror(msg);
     exit(0);
 }
