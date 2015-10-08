@@ -109,7 +109,7 @@ void check_for_socket_error(ssize_t n) {
 char get_parsed_character(char *character) {
     char parsed_character = 0;
     for (int i = 0; i < 8; i++) {
-        if (character[i]) {
+        if (character[i] == '1') {
             parsed_character |= (1 << i);
         } else {
             parsed_character &= ~(1 << i);
