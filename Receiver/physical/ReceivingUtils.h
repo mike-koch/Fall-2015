@@ -1,5 +1,5 @@
-#ifndef RECEIVER_TRANSMISSIONUTILS_H
-#define RECEIVER_TRANSMISSIONUTILS_H
+#ifndef RECEIVER_RECEIVINGUTILS_H
+#define RECEIVER_RECEIVINGUTILS_H
 #include <stdio.h>
 #include <iostream>
 #include <sys/types.h>

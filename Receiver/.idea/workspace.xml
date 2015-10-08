@@ -71,11 +71,23 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Framing.h" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Framing.h" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/datalink/Framing.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.20547946">
-              <caret line="7" column="22" selection-start-line="7" selection-start-column="22" selection-end-line="7" selection-end-column="22" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+              <folding>
+                <element signature="e#93#111#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ReceivingUtils.h" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/physical/ReceivingUtils.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="0" column="26" selection-start-line="0" selection-start-column="26" selection-end-line="0" selection-end-column="26" />
               <folding />
             </state>
           </provider>
@@ -103,6 +115,7 @@
         <option value="$PROJECT_DIR$/physical/TransmissionUtils.cpp" />
         <option value="$PROJECT_DIR$/Receiver.cpp" />
         <option value="$PROJECT_DIR$/datalink/Framing.h" />
+        <option value="$PROJECT_DIR$/physical/ReceivingUtils.h" />
       </list>
     </option>
   </component>
@@ -371,7 +384,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#74#92#0" expanded="false" />
+            <element signature="e#68#86#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -421,7 +434,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="16" column="4" selection-start-line="16" selection-start-column="4" selection-end-line="16" selection-end-column="4" />
           <folding>
-            <element signature="e#74#92#0" expanded="false" />
+            <element signature="e#68#86#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -471,7 +484,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="7" column="19" selection-start-line="7" selection-start-column="19" selection-end-line="7" selection-end-column="19" />
           <folding>
-            <element signature="e#74#92#0" expanded="false" />
+            <element signature="e#68#86#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -521,16 +534,6 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/physical/ReceivingUtils.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.41095892">
-          <caret line="14" column="39" selection-start-line="14" selection-start-column="39" selection-end-line="14" selection-end-column="39" />
-          <folding>
-            <element signature="e#74#92#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -606,6 +609,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/datalink/Framing.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+          <folding>
+            <element signature="e#93#111#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/physical/ReceivingUtils.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -614,10 +627,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/datalink/Framing.h">
+    <entry file="file://$PROJECT_DIR$/physical/ReceivingUtils.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.20547946">
-          <caret line="7" column="22" selection-start-line="7" selection-start-column="22" selection-end-line="7" selection-end-column="22" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="26" selection-start-line="0" selection-start-column="26" selection-end-line="0" selection-end-column="26" />
           <folding />
         </state>
       </provider>
