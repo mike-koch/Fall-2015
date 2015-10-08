@@ -66,8 +66,8 @@ void error(const char *msg) {
 }
 
 void check_args(int argc) {
-    if (argc < 3) {
-        std::cerr << "Usage: Transmitter.cpp [hostname] [port]";
+    if (argc < 4) {
+        std::cerr << "Usage: Transmitter.cpp [hostname] [port] [filename]";
         exit(0);
     }
 }
