@@ -28,7 +28,7 @@ void send_through_socket(char message[], unsigned int size, int newsockfd);
 char* append_char_to_output(char *binary_value, char character, unsigned int starting_offset) {
     for (int i = 0; i < 8; ++i) {
         int binary_value_as_int = (character >> i & 1);
-        binary_value[i + starting_offset] = (char)binary_value_as_int;
+        binary_value[i + starting_offset] = binary_value_as_int + '0';
     }
     return binary_value;
 }
