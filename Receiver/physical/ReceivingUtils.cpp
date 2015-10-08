@@ -65,7 +65,7 @@ int read_for_length(int sockfd) {
         }
     }
 
-    std::cerr << "ERROR: Receiver received malformed input. Terminating";
+    std::cerr << "ERROR: Receiver received malformed input. Terminating" << std::endl;
     exit(ERROR_MALFORMED_CONTENT);
     return -1;
 }

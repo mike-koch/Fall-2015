@@ -12,7 +12,7 @@
 
 using namespace std;
 
-void error(char* msg);
+void error(const char* msg);
 void check_args(int argc);
 void connect_to_server(char *argv[], int &sockfd);
 

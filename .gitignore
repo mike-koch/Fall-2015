@@ -1,2 +1,3 @@
-Transmitter/.idea/
-Receiver/.idea/
+*/Transmitter/.idea/
+*/Receiver/.idea/
+*/build/
