@@ -80,10 +80,21 @@ int read_for_length(int sockfd) {
 #endif
             character = get_parsed_character(buffer);
             return character;
+        } else {
+            std::cerr << "ERROR: Received first SYN, but second character was not SYN. Failing frame is below:" << std::endl;
+            for (int i = 0; i < 8; i++) {
+            std::cerr << buffer[i];
         }
+        std::cerr << std::endl;
+        }
+    } else {
+        std::cerr << "ERROR: Expected first SYN, but character was not SYN. Failing frame is below:" << std::endl;
+        for (int i = 0; i < 8; i++) {
+            std::cerr << buffer[i];
+        }
+        std::cerr << std::endl;
     }
 
-    std::cerr << "ERROR: Receiver received malformed input. Terminating" << std::endl;
     exit(ERROR_MALFORMED_CONTENT);
     return -1;
 }
