@@ -116,6 +116,9 @@ void output_to_console(char message[], unsigned int length) {
 }
 
 void send_through_socket(char message[], unsigned int size, int newsockfd) {
+#ifdef DEBUG
+    output_to_console(message, size);
+#endif
     int n = write(newsockfd, message, size);
     if (n < 0) {
         perror("ERROR: Unable to write to socket");
