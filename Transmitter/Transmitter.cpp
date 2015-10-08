@@ -60,7 +60,7 @@ void connect_to_server(char *argv[], int &sockfd) {
         error("ERROR connecting");
 }
 
-void error(char *msg) {
+void error(const char *msg) {
     perror(msg);
     exit(1);
 }
