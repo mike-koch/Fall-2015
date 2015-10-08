@@ -36,7 +36,7 @@ bool socket_is_alive(int sockfd) {
     if (received < 0) {
         error("An error occurred when trying to check if the socket was still alive.");
     }
-    return received;
+    return (bool)received;
 }
 
 
@@ -51,7 +51,7 @@ void check_args(int argc) {
 void setup_socket(char *const *argv, int &newsockfd) {
     struct sockaddr_in serv_addr, cli_addr;
 
-    fprintf(stdout, "Run client by providing host and port\n");
+    fprintf(stderr, "Run client by providing host and port\n----------------------------------------\n");
     int sockfd = socket(AF_INET, SOCK_STREAM, 0);
     if (sockfd < 0) {
         error("ERROR opening socket");
@@ -59,7 +59,7 @@ void setup_socket(char *const *argv, int &newsockfd) {
     bzero((char *) &serv_addr, sizeof(serv_addr));
     serv_addr.sin_family = AF_INET;
     serv_addr.sin_addr.s_addr = INADDR_ANY;
-    serv_addr.sin_port = htons(atoi(argv[1]));
+    serv_addr.sin_port = htons((uint16_t) atoi(argv[1]));
     if (bind(sockfd, (struct sockaddr *) &serv_addr,
              sizeof(serv_addr)) < 0) {
         error("ERROR on binding");

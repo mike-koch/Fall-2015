@@ -1,7 +1,7 @@
 #include "TransmissionUtils.h"
 #include "../enum/ErrorCodes.h"
 #include "../datalink/Framing.h"
-void check_for_socket_error(int n);
+void check_for_socket_error(ssize_t n);
 void output_frame_contents(Frame *frame);
 
 void read(int sockfd) {
@@ -9,7 +9,7 @@ void read(int sockfd) {
 
     int length_of_buffer = length * 8;
     char buffer[length_of_buffer];
-    read(sockfd, buffer, length_of_buffer);
+    read(sockfd, buffer, (size_t)length_of_buffer);
     //std::cout << "Read the contents of the file descriptor" << std::endl;
 #ifdef DEBUG
     for (int i = 0; i < length_of_buffer; i++) {
@@ -30,8 +30,8 @@ void read(int sockfd) {
 //    which is the length.
 int read_for_length(int sockfd) {
     char buffer[8];
-    int n;
-    n = read(sockfd, buffer, 8);
+    ssize_t n;
+    n = read(sockfd, buffer, (size_t)8);
     check_for_socket_error(n);
 #ifdef DEBUG
     for (int i = 0; i < 8; i++) {
@@ -42,7 +42,7 @@ int read_for_length(int sockfd) {
     char character = get_parsed_character(buffer);
     if (character == 22) {
         // Get the next character. If it's also a SYN character, the next must be the length
-        n = read(sockfd, buffer, 8);
+        n = read(sockfd, buffer, (size_t)8);
         check_for_socket_error(n);
 #ifdef DEBUG
         for (int i = 0; i < 8; i++) {
@@ -53,7 +53,7 @@ int read_for_length(int sockfd) {
         character = get_parsed_character(buffer);
         if (character == 22) {
             // Next is the length
-            n = read(sockfd, buffer, 8);
+            n = read(sockfd, buffer, (size_t)8);
             check_for_socket_error(n);
 #ifdef DEBUG
             for (int i = 0; i < 8; i++) {
@@ -65,9 +65,13 @@ int read_for_length(int sockfd) {
             return character;
         }
     }
+
+    std::cerr << "ERROR: Receiver received malformed input. Terminating";
+    exit(ERROR_MALFORMED_CONTENT);
+    return -1;
 }
 
-void check_for_socket_error(int n) {
+void check_for_socket_error(ssize_t n) {
     if (n < 0) {
         perror("ERROR: Unable to read from socket");
         exit(ERROR_UNABLE_TO_READ_FROM_SOCKET);

@@ -4,7 +4,7 @@
 
 #include "Framing.h"
 void build_frame(Frame *frame, int length, char *data) {
-    frame->length = length;
+    frame->length = (char)length;
 
     char parsed_data[length];
     for (int i = 0; i < length; i++) {
