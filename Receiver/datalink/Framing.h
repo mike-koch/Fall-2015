@@ -5,7 +5,7 @@
 #define RECEIVER_FRAMING_H
 
 #include "Frame.h"
-#include "../physical/TransmissionUtils.h"
+#include "../physical/ReceivingUtils.h"
 
 // data: The UNPARSED data received from the Transmitter. This will not work if the data is already parsed!
 //       data must also be no more than 64 characters long
