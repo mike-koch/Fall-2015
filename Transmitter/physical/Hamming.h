@@ -1,7 +1,3 @@
-//
-// Created by mkoch on 10/27/15.
-//
-
 #ifndef TRANSMITTER_HAMMING_H
 #define TRANSMITTER_HAMMING_H
 

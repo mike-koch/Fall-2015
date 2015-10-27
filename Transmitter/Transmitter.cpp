@@ -19,17 +19,20 @@ void connect_to_server(char *argv[], int &sockfd);
 int main(int argc, char *argv[])
 {
     int sockfd;
+    SendMode sendMode = SendMode::SOCKET;
 
     check_args(argc);
 
-    connect_to_server(argv, sockfd);
+    if (sendMode == SendMode::SOCKET) {
+        connect_to_server(argv, sockfd);
+    }
 
     std::string message =
             retrieve_file_to_transmit(argv[3]);
     for (unsigned int i = 0; i < strlen(message.c_str()); i += 64) {
         Frame *frame = new Frame();
         build_frame(message.c_str(), i, frame);
-        send(frame, SendMode::SOCKET, sockfd);
+        send(frame, sendMode, sockfd);
         delete frame;
     }
 

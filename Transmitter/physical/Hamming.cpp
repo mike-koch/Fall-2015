@@ -1,7 +1,3 @@
-//
-// Created by mkoch on 10/27/15.
-//
-
 #include "Hamming.h"
 
 // Takes any char with a value between '0'-'9' and returns the integer value
