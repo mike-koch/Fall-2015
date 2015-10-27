@@ -48,9 +48,9 @@ char* apply_hamming(char *original_message, int &length_of_message) {
         new_data[i + 10] = original_message[i + 6];
         new_data[i + 11] = original_message[i + 7];
 
-        // Now calculate and place the parity bits
-        // Parity bit #1 (even parity, position 1) calculates values at 1, 3, 5, 7, 9, 11
-        int value = 0;
+        // Now calculate and place the parity bits (all odd parity)
+        // Parity bit #1 (position 1) calculates values at 1, 3, 5, 7, 9, 11
+        int value = 1;
         value ^= get_int_value_of_char(new_data[i + 2]);
         value ^= get_int_value_of_char(new_data[i + 4]);
         value ^= get_int_value_of_char(new_data[i + 6]);
@@ -58,7 +58,7 @@ char* apply_hamming(char *original_message, int &length_of_message) {
         value ^= get_int_value_of_char(new_data[i + 10]);
         new_data[i] = (char) value + '0';
 
-        // Parity bit #2 (odd parity, position 2) calculates values at 2, 3, 6, 7, 10, 11
+        // Parity bit #2 (position 2) calculates values at 2, 3, 6, 7, 10, 11
         value = 1;
         value ^= get_int_value_of_char(new_data[i + 2]);
         value ^= get_int_value_of_char(new_data[i + 5]);
@@ -67,7 +67,7 @@ char* apply_hamming(char *original_message, int &length_of_message) {
         value ^= get_int_value_of_char(new_data[i + 10]);
         new_data[i + 1] = (char) value + '0';
 
-        // Parity bit #3 (odd parity, position 4) calculates values at 4, 5, 6, 7, 12
+        // Parity bit #3 (position 4) calculates values at 4, 5, 6, 7, 12
         value = 1;
         value ^= get_int_value_of_char(new_data[i + 4]);
         value ^= get_int_value_of_char(new_data[i + 5]);
@@ -75,8 +75,8 @@ char* apply_hamming(char *original_message, int &length_of_message) {
         value ^= get_int_value_of_char(new_data[i + 11]);
         new_data[i + 3] = (char) value + '0';
 
-        // Parity bit #4 (even parity, position 8) calculates values at 8, 9, 10, 11, 12
-        value = 0;
+        // Parity bit #4 (position 8) calculates values at 8, 9, 10, 11, 12
+        value = 1;
         value ^= get_int_value_of_char(new_data[i + 8]);
         value ^= get_int_value_of_char(new_data[i + 9]);
         value ^= get_int_value_of_char(new_data[i + 10]);
