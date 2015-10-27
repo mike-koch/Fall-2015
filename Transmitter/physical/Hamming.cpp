@@ -40,7 +40,7 @@ char* apply_hamming(char *original_message, int &length_of_message) {
          *  7                      | 11
          */
         new_data[i + 2] = original_message[i];
-        new_data[i + 4] = original_message[i + 1] - 48;
+        new_data[i + 4] = original_message[i + 1];
         new_data[i + 5] = original_message[i + 2];
         new_data[i + 6] = original_message[i + 3];
         new_data[i + 8] = original_message[i + 4];
