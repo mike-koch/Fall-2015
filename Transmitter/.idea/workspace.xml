@@ -78,21 +78,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CRC.cpp" pinned="false" current-in-tab="true">
+      <file leaf-file-name="CRC.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/physical/CRC.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.13548388">
-              <caret line="7" column="31" selection-start-line="7" selection-start-column="31" selection-end-line="7" selection-end-column="31" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CRC.h" pinned="false" current-in-tab="false">
+      <file leaf-file-name="CRC.h" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/physical/CRC.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.15483871">
+              <caret line="8" column="16" selection-start-line="8" selection-start-column="16" selection-end-line="8" selection-end-column="16" />
               <folding />
             </state>
           </provider>
@@ -171,8 +171,8 @@
         <option value="$PROJECT_DIR$/enum/SendMode.h" />
         <option value="$PROJECT_DIR$/physical/TransmissionUtils.cpp" />
         <option value="$PROJECT_DIR$/Transmitter.cpp" />
-        <option value="$PROJECT_DIR$/physical/CRC.h" />
         <option value="$PROJECT_DIR$/physical/CRC.cpp" />
+        <option value="$PROJECT_DIR$/physical/CRC.h" />
       </list>
     </option>
   </component>
@@ -770,18 +770,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/physical/CRC.h">
+    <entry file="file://$PROJECT_DIR$/physical/CRC.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+          <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/physical/CRC.cpp">
+    <entry file="file://$PROJECT_DIR$/physical/CRC.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.13548388">
-          <caret line="7" column="31" selection-start-line="7" selection-start-column="31" selection-end-line="7" selection-end-column="31" />
+        <state vertical-scroll-proportion="0.15483871">
+          <caret line="8" column="16" selection-start-line="8" selection-start-column="16" selection-end-line="8" selection-end-column="16" />
           <folding />
         </state>
       </provider>
