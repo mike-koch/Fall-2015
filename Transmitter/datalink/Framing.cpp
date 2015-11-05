@@ -1,3 +1,4 @@
+#include <string.h>
 #include "Framing.h"
 int get_end_offset(const char *data, unsigned int offset);
 
@@ -9,7 +10,7 @@ Frame* build_frame(const char *data, unsigned int offset, Frame *frame_to_popula
 
     frame_to_populate->length = length;
     for (int i = 0; i < length; i++) {
-        frame_to_populate->data[i] = data[offset + i];
+        frame_to_populate->data += data[offset + i];
     }
 
     return frame_to_populate;

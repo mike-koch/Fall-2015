@@ -9,6 +9,7 @@
 #include "app/FileManager.h"
 #include "datalink/Framing.h"
 #include "physical/TransmissionUtils.h"
+#include "enum/ErrorCorrection.h"
 
 using namespace std;
 
@@ -19,7 +20,9 @@ void connect_to_server(char *argv[], int &sockfd);
 int main(int argc, char *argv[])
 {
     int sockfd;
-    SendMode sendMode = SendMode::SOCKET;
+    SendMode sendMode = SendMode::CONSOLE;
+    ErrorCorrection error_correction = ErrorCorrection::NONE;
+
 
     check_args(argc);
 
@@ -32,7 +35,7 @@ int main(int argc, char *argv[])
     for (unsigned int i = 0; i < strlen(message.c_str()); i += 64) {
         Frame *frame = new Frame();
         build_frame(message.c_str(), i, frame);
-        send(frame, sendMode, sockfd);
+        send(frame, sendMode, sockfd, error_correction);
         delete frame;
     }
 

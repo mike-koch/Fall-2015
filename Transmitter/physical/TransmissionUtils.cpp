@@ -1,10 +1,11 @@
-//#define DEBUG
+#define DEBUG
 #include <string.h>
 #include <iostream>
 #include <bitset>
 #include <unistd.h>
 #include "TransmissionUtils.h"
 #include "../enum/ErrorCodes.h"
+#include "CRC.h"
 #include <fstream>
 #ifndef DEBUG
 #include <stdlib.h>
@@ -58,7 +59,7 @@ bool check_bit(char &character, int position) {
     return (bool) (character & (1<<(position)));
 }
 
-void send(Frame *frame_to_send, SendMode send_mode, int newsockfd) {
+void send(Frame *frame_to_send, SendMode send_mode, int newsockfd, ErrorCorrection error_correction_mode) {
 #ifndef DEBUG
     if (send_mode == SendMode::CONSOLE) {
         std::cout << "ERROR: Console is not allowed unless in DEBUG mode";
@@ -67,6 +68,13 @@ void send(Frame *frame_to_send, SendMode send_mode, int newsockfd) {
 #endif
 
     unsigned int data_length = frame_to_send->length;
+    if (error_correction_mode == ErrorCorrection::CRC) {
+        uint16_t crc = get_crc_16(frame_to_send->data.c_str(), data_length);
+        frame_to_send->data += crc;
+
+    } else if (error_correction_mode == ErrorCorrection::HAMMING) {
+        // TODO
+    }
     append_parity_bits(frame_to_send, frame_to_send->length);
 
     char output_message[get_output_size(data_length)];

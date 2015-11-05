@@ -10,6 +10,7 @@
       <sourceFolder url="file://$MODULE_DIR$/datalink/Framing.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/datalink/Framing.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/enum/ErrorCodes.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/enum/ErrorCorrection.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/enum/SendMode.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/physical/CRC.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/physical/CRC.h" isTestSource="false" />

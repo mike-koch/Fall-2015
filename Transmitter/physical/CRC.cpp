@@ -4,7 +4,7 @@
 #define CRC_POLY 0x8005
 
 
-uint16_t get_crc_16(char *message_to_transmit, int length_of_message) {
+uint16_t get_crc_16(const char *message_to_transmit, int length_of_message) {
     uint16_t crc = 0;
     uint16_t poly = CRC_POLY;
 

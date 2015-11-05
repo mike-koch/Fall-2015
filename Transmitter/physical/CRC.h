@@ -4,6 +4,6 @@
 
 #include <stdint.h>
 
-uint16_t get_crc_16(char *message_to_transmit, int length_of_message);
+uint16_t get_crc_16(const char *message_to_transmit, int length_of_message);
 
 #endif //TRANSMITTER_CRC_H
