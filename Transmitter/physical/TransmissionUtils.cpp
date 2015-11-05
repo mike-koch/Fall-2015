@@ -71,6 +71,8 @@ void send(Frame *frame_to_send, SendMode send_mode, int newsockfd, ErrorCorrecti
     if (error_correction_mode == ErrorCorrection::CRC) {
         uint16_t crc = get_crc_16(frame_to_send->data.c_str(), data_length);
         frame_to_send->data += crc;
+        frame_to_send->length += 2;
+        data_length += 2;
 
     } else if (error_correction_mode == ErrorCorrection::HAMMING) {
         // TODO

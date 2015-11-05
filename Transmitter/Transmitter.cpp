@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
 {
     int sockfd;
     SendMode sendMode = SendMode::CONSOLE;
-    ErrorCorrection error_correction = ErrorCorrection::NONE;
+    ErrorCorrection error_correction = ErrorCorrection::CRC;
 
 
     check_args(argc);
