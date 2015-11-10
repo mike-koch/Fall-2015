@@ -22,6 +22,7 @@ int main(int argc, char *argv[])
     int sockfd;
     SendMode sendMode = SendMode::SOCKET;
     ErrorCorrection error_correction = ErrorCorrection::CRC;
+    int number_of_bytes_per_frame = error_correction == ErrorCorrection::CRC ? 62 : 64;
 
 
     check_args(argc);
@@ -32,9 +33,9 @@ int main(int argc, char *argv[])
 
     std::string message =
             retrieve_file_to_transmit(argv[3]);
-    for (unsigned int i = 0; i < strlen(message.c_str()); i += 62) {
+    for (unsigned int i = 0; i < strlen(message.c_str()); i += number_of_bytes_per_frame) {
         Frame *frame = new Frame();
-        build_frame(message.c_str(), i, frame);
+        build_frame(message.c_str(), i, frame, error_correction);
         send(frame, sendMode, sockfd, error_correction);
         delete frame;
     }
