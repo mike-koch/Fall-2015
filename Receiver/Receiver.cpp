@@ -4,6 +4,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "physical/ReceivingUtils.h"
+#include "enum/ErrorCorrection.h"
 
 void check_args(int argc);
 void setup_socket(char *const *argv, int &newsockfd);
@@ -15,6 +16,7 @@ bool socket_is_alive(int sockfd);
 
 int main(int argc, char *argv[])
 {
+    ErrorCorrection error_correction_mode = ErrorCorrection::CRC;
     int newsockfd;
 
     check_args(argc);
@@ -24,7 +26,7 @@ int main(int argc, char *argv[])
     //     the client has connected.  Once the client connects, we can start transmitting.
 
     while (socket_is_alive(newsockfd)) {
-        read(newsockfd);
+        read(newsockfd, error_correction_mode);
     }
 
     return 0;

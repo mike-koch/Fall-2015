@@ -10,7 +10,7 @@ Frame* build_frame(const char *data, unsigned int offset, Frame *frame_to_popula
 
     frame_to_populate->length = length;
     for (int i = 0; i < length; i++) {
-        frame_to_populate->data += data[offset + i];
+        frame_to_populate->data[i] = data[offset + i];
     }
 
     return frame_to_populate;
@@ -18,7 +18,7 @@ Frame* build_frame(const char *data, unsigned int offset, Frame *frame_to_popula
 
 // Helper function to get the "actual" end index, in case the next frame is going to be less than 64 bytes. Offset is 0-indexed
 int get_end_offset(const char *data, unsigned int offset) {
-    const int offset_amount = 64;
+    const int offset_amount = 62;
     unsigned int length_to_process = offset + offset_amount;
     size_t length_of_data = strlen(data);
 

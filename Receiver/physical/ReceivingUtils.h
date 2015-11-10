@@ -9,8 +9,9 @@
 #include <string.h>
 #include <stdlib.h>
 #include <netdb.h>
+#include "../enum/ErrorCorrection.h"
 
-void read(int sockfd);
+void read(int sockfd, ErrorCorrection error_correction_mode);
 int read_for_length(int sockfd);
 void strip_parity_bit(char &character);
 void get_next_eight_bits(char *large_buffer, char *small_buffer, int start_value);

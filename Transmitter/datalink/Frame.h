@@ -10,6 +10,6 @@ struct Frame {
     char first_syn = SYN;
     char second_syn = SYN;
     char length;
-    std::string data;
+    char data[64];
 };
 #endif //TRANSMITTER_FRAME_H

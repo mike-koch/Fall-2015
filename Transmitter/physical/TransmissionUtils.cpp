@@ -1,4 +1,4 @@
-#define DEBUG
+//#define DEBUG
 #include <string.h>
 #include <iostream>
 #include <bitset>
@@ -60,24 +60,26 @@ bool check_bit(char &character, int position) {
 }
 
 void send(Frame *frame_to_send, SendMode send_mode, int newsockfd, ErrorCorrection error_correction_mode) {
-#ifndef DEBUG
+#ifdef DEBUG
     if (send_mode == SendMode::CONSOLE) {
         std::cout << "ERROR: Console is not allowed unless in DEBUG mode";
         exit(ERROR_CONSOLE_NOT_ALLOWED_UNLESS_IN_DEBUG);
     }
 #endif
 
+    append_parity_bits(frame_to_send, frame_to_send->length);
+
     unsigned int data_length = frame_to_send->length;
     if (error_correction_mode == ErrorCorrection::CRC) {
-        uint16_t crc = get_crc_16(frame_to_send->data.c_str(), data_length);
-        frame_to_send->data += crc;
-        frame_to_send->length += 2;
+        uint16_t crc = get_crc_16((unsigned char*) frame_to_send->data, data_length);
+        frame_to_send->data[frame_to_send->length++] = crc & 0xFF;
+        frame_to_send->data[frame_to_send->length++] = crc >> 8;
         data_length += 2;
+
 
     } else if (error_correction_mode == ErrorCorrection::HAMMING) {
         // TODO
     }
-    append_parity_bits(frame_to_send, frame_to_send->length);
 
     char output_message[get_output_size(data_length)];
     append_char_to_output(output_message, frame_to_send->first_syn, 0);
@@ -120,7 +122,7 @@ void output_to_console(char message[], unsigned int length) {
         } else if (i % 8 == 0 && i != 0) {
             std::cout << "_";
         }
-        std::cout << (int)message[i];
+        std::cout << (int)message[i] - 48;
     }
     std::cout << std::endl;
 }

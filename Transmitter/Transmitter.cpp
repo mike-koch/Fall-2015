@@ -20,7 +20,7 @@ void connect_to_server(char *argv[], int &sockfd);
 int main(int argc, char *argv[])
 {
     int sockfd;
-    SendMode sendMode = SendMode::CONSOLE;
+    SendMode sendMode = SendMode::SOCKET;
     ErrorCorrection error_correction = ErrorCorrection::CRC;
 
 
@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
 
     std::string message =
             retrieve_file_to_transmit(argv[3]);
-    for (unsigned int i = 0; i < strlen(message.c_str()); i += 64) {
+    for (unsigned int i = 0; i < strlen(message.c_str()); i += 62) {
         Frame *frame = new Frame();
         build_frame(message.c_str(), i, frame);
         send(frame, sendMode, sockfd, error_correction);

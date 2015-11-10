@@ -1,10 +1,13 @@
+//#define DEBUG
 #include "ReceivingUtils.h"
 #include "../enum/ErrorCodes.h"
 #include "../datalink/Framing.h"
+#include "CRC.h"
+
 void check_for_socket_error(ssize_t n);
 void output_frame_contents(Frame *frame);
 
-void read(int sockfd) {
+void read(int sockfd, ErrorCorrection error_correction_mode) {
     int length = read_for_length(sockfd);
     int current_bytes_read = 0;
 
@@ -27,9 +30,12 @@ void read(int sockfd) {
     }
     std::cout << std::endl;
 #endif
+
     Frame *frame = new Frame();
-    build_frame(frame, length, buffer);
-    output_frame_contents(frame);
+    bool build_result = build_frame(frame, length, buffer, error_correction_mode);
+    if (build_result) {
+        output_frame_contents(frame);
+    }
     delete frame;
 }
 
@@ -116,7 +122,6 @@ char get_parsed_character(char *character) {
         }
     }
 
-    strip_parity_bit(parsed_character);
     return parsed_character;
 }
 

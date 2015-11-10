@@ -11,5 +11,5 @@
 //       data must also be no more than 64 characters long
 // length: The PARSED integer representation of the length. Passing a char is permitted, as long as the int value of the
 //         char is equivalent to the length
-void build_frame(Frame *frame, int length, char *data);
+bool build_frame(Frame *frame, int length, char *data, ErrorCorrection error_correction_mode);
 #endif //RECEIVER_FRAMING_H
