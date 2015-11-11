@@ -65,7 +65,10 @@ void send(Frame *frame_to_send, SendMode send_mode, int newsockfd, ErrorCorrecti
     }
 #endif
     unsigned int data_length = frame_to_send->length;
-    frame_to_send->length += 2;
+
+    if (error_correction_mode == ErrorCorrection::CRC) {
+        frame_to_send->length += 2;
+    }
     append_parity_bits(frame_to_send, frame_to_send->length);
 
 

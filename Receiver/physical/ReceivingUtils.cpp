@@ -8,7 +8,7 @@ void check_for_socket_error(ssize_t n);
 void output_frame_contents(Frame *frame);
 
 void read(int sockfd, ErrorCorrection error_correction_mode) {
-    int length = read_for_length(sockfd);
+    int length = read_for_length(sockfd, error_correction_mode);
     int current_bytes_read = 0;
 
     int multiplier = error_correction_mode == ErrorCorrection::HAMMING ? 12 : 8;
@@ -43,8 +43,9 @@ void read(int sockfd, ErrorCorrection error_correction_mode) {
 
 // Read the message received. This will look for two SYN characters, and then will return the next character,
 //    which is the length.
-int read_for_length(int sockfd) {
-    char buffer[8];
+int read_for_length(int sockfd, ErrorCorrection error_correction_mode) {
+    int buffer_length = error_correction_mode == ErrorCorrection::HAMMING ? 12 : 8;
+    char buffer[buffer_length];
     ssize_t n;
     n = read(sockfd, buffer, (size_t)8);
     check_for_socket_error(n);
@@ -55,6 +56,7 @@ int read_for_length(int sockfd) {
     std::cout << "|";
 #endif
     char character = get_parsed_character(buffer);
+    strip_parity_bit(character);
     if (character == 22) {
         // Get the next character. If it's also a SYN character, the next must be the length
         while (true) {
@@ -71,10 +73,11 @@ int read_for_length(int sockfd) {
         std::cout << "|";
 #endif
         character = get_parsed_character(buffer);
+        strip_parity_bit(character);
         if (character == 22) {
             // Next is the length
             while (true) {
-                n = read(sockfd, buffer, (size_t)8);
+                n = read(sockfd, buffer, (size_t)buffer_length);
                 check_for_socket_error(n);
                 if (n > 0) {
                     break;
@@ -87,6 +90,7 @@ int read_for_length(int sockfd) {
             std::cout << "|";
 #endif
             character = get_parsed_character(buffer);
+            strip_parity_bit(character);
             return character;
         } else {
             std::cerr << "ERROR: Received first SYN, but second character was not SYN. Failing frame is below:" << std::endl;

@@ -14,15 +14,9 @@ char* apply_hamming(char *original_message, unsigned int length_of_message, char
     const int NUMBER_OF_BITS_PER_BYTE = 8;
     const int NUMBER_OF_PARITY_BITS_PER_BYTE = 4;
 
-    int original_length = length_of_message;
-
-    // For each 8 bits, we need 4 parity bits. So take length_of_message / 8 * 4 to get number of parity bits.
-    // Add that to the original length to get the new length.
-    length_of_message *= 12;
-
     // Iterate through each byte of the message and apply Hamming
     int k = 0;
-    for (int i = 0; i < original_length; i++, k += 12) {
+    for (int i = 0; i < length_of_message; i++, k += 12) {
         /*
          *  ORIGINAL BIT POSITION  |  POSITION AFTER HAMMING
          *  -----------------------+------------------------
@@ -58,6 +52,7 @@ char* apply_hamming(char *original_message, unsigned int length_of_message, char
         value = 1;
         value ^= get_int_value_of_char(new_data[k + 2]);
         value ^= get_int_value_of_char(new_data[k + 5]);
+        value ^= get_int_value_of_char(new_data[k + 6]);
         value ^= get_int_value_of_char(new_data[k + 9]);
         value ^= get_int_value_of_char(new_data[k + 10]);
         new_data[k + 1] = value + '0';
