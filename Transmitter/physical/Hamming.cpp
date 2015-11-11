@@ -58,7 +58,6 @@ char* apply_hamming(char *original_message, unsigned int length_of_message, char
         value = 1;
         value ^= get_int_value_of_char(new_data[k + 2]);
         value ^= get_int_value_of_char(new_data[k + 5]);
-        value ^= get_int_value_of_char(new_data[k + 6]);
         value ^= get_int_value_of_char(new_data[k + 9]);
         value ^= get_int_value_of_char(new_data[k + 10]);
         new_data[k + 1] = value + '0';

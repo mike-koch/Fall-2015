@@ -12,6 +12,8 @@
       <sourceFolder url="file://$MODULE_DIR$/enum/OutputMode.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/physical/CRC.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/physical/CRC.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/physical/Hamming.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/physical/Hamming.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/physical/ReceivingUtils.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/physical/ReceivingUtils.h" isTestSource="false" />
     </content>

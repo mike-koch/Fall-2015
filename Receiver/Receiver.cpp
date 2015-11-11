@@ -16,7 +16,7 @@ bool socket_is_alive(int sockfd);
 
 int main(int argc, char *argv[])
 {
-    ErrorCorrection error_correction_mode = ErrorCorrection::CRC;
+    ErrorCorrection error_correction_mode = ErrorCorrection::HAMMING;
     int newsockfd;
 
     check_args(argc);

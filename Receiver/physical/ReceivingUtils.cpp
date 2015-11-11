@@ -11,7 +11,8 @@ void read(int sockfd, ErrorCorrection error_correction_mode) {
     int length = read_for_length(sockfd);
     int current_bytes_read = 0;
 
-    int length_of_buffer = length * 8;
+    int multiplier = error_correction_mode == ErrorCorrection::HAMMING ? 12 : 8;
+    int length_of_buffer = length * multiplier;
     char buffer[length_of_buffer];
 
     while (true) {
@@ -30,6 +31,7 @@ void read(int sockfd, ErrorCorrection error_correction_mode) {
     }
     std::cout << std::endl;
 #endif
+
 
     Frame *frame = new Frame();
     bool build_result = build_frame(frame, length, buffer, error_correction_mode);

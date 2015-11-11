@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
 {
     int sockfd;
     SendMode sendMode = SendMode::SOCKET;
-    ErrorCorrection error_correction = ErrorCorrection::CRC;
+    ErrorCorrection error_correction = ErrorCorrection::HAMMING;
     int number_of_bytes_per_frame = error_correction == ErrorCorrection::CRC ? 62 : 64;
 
 
