@@ -1,4 +1,4 @@
-#define DEBUG
+//#define DEBUG
 #include <string.h>
 #include <iostream>
 #include <bitset>
@@ -85,7 +85,7 @@ void send(Frame *frame_to_send, SendMode send_mode, int newsockfd, ErrorCorrecti
 
     if (error_correction_mode == ErrorCorrection::HAMMING) {
         char new_data[data_length * 12];
-        apply_hamming(frame_to_send->data, data_length, new_data);
+        apply_hamming((unsigned char*) frame_to_send->data, data_length, new_data);
 
         for (int i = 0; i < data_length * 12; i++) {
             output_message[24 + i] = new_data[i];
@@ -98,9 +98,9 @@ void send(Frame *frame_to_send, SendMode send_mode, int newsockfd, ErrorCorrecti
 
     if (send_mode == SendMode::CONSOLE) {
         // Forcing the correction mode to NONE as data_length is now 1.5 times what it used to be.
-        output_to_console(output_message, get_output_size(data_length, ErrorCorrection::HAMMING), error_correction_mode);
+        output_to_console(output_message, get_output_size(data_length, error_correction_mode), error_correction_mode);
     } else {
-        send_through_socket(output_message, get_output_size(data_length, ErrorCorrection::NONE), newsockfd, error_correction_mode);
+        send_through_socket(output_message, get_output_size(data_length, error_correction_mode), newsockfd, error_correction_mode);
     }
 }
 
@@ -129,14 +129,6 @@ unsigned int get_output_size(unsigned int data_length, ErrorCorrection error_cor
 
 void output_to_console(char message[], unsigned int length, ErrorCorrection error_correction_mode) {
     for (int i = 0; i < length; i++) {
-        if (i == 8 || i == 16 || i == 24) {
-            std::cout << "|";
-        } else if (
-            ((i % 8 == 0 && error_correction_mode != ErrorCorrection::HAMMING)
-            || i % 12 == 0 && error_correction_mode == ErrorCorrection::HAMMING)
-            && i != 0) {
-            std::cout << "_";
-        }
         std::cout << (int)message[i] - 48;
     }
     std::cout << std::endl;
@@ -147,6 +139,7 @@ void send_through_socket(char message[], unsigned int size, int newsockfd, Error
     output_to_console(message, size, error_correction_mode);
 #endif
     int n = write(newsockfd, message, size);
+    std::cout << n << std::endl;
     if (n < 0) {
         perror("ERROR: Unable to write to socket");
         exit(ERROR_UNABLE_TO_WRITE_TO_SOCKET);

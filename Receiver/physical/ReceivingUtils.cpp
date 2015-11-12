@@ -44,7 +44,7 @@ void read(int sockfd, ErrorCorrection error_correction_mode) {
 // Read the message received. This will look for two SYN characters, and then will return the next character,
 //    which is the length.
 int read_for_length(int sockfd, ErrorCorrection error_correction_mode) {
-    int buffer_length = error_correction_mode == ErrorCorrection::HAMMING ? 12 : 8;
+    int buffer_length = 8;
     char buffer[buffer_length];
     ssize_t n;
     n = read(sockfd, buffer, (size_t)8);
