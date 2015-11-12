@@ -16,6 +16,8 @@
       <sourceFolder url="file://$MODULE_DIR$/physical/Hamming.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/physical/ReceivingUtils.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/physical/ReceivingUtils.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/physical/test.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/physical/test.h" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
