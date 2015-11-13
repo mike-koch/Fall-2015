@@ -1,4 +1,4 @@
-//#define DEBUG
+#define DEBUG
 #include <string.h>
 #include <iostream>
 #include <bitset>
@@ -21,6 +21,8 @@ unsigned int get_output_size(unsigned int data_length, ErrorCorrection error_cor
 void output_to_console(char message[], unsigned int length, ErrorCorrection error_correction_mode);
 
 void send_through_socket(char message[], unsigned int size, int newsockfd, ErrorCorrection error_correction_mode);
+
+char get_possibly_clobbered_bit(char character, int &number_of_clobbered_bits, int number_of_bits_to_clobber, bool &byte_clobbered, int current_byte, int current_bit);
 
 /**
  * Converts a single character into its binary value and appended to the output.
@@ -46,9 +48,6 @@ void append_parity_bit(char &character) {
     if (parity_bit == 1) {
         character |= (1 << 7);
     }
-#ifdef DEBUG
-    std::cout << "After parity (int): " << (int)(uint8_t)character << std::endl;
-#endif
 
     return;
 }
@@ -57,7 +56,7 @@ bool check_bit(char &character, int position) {
     return (bool) (character & (1<<(position)));
 }
 
-void send(Frame *frame_to_send, SendMode send_mode, int newsockfd, ErrorCorrection error_correction_mode) {
+void send(Frame *frame_to_send, SendMode send_mode, int newsockfd, ErrorCorrection error_correction_mode, int number_of_bits_to_clobber) {
 #ifndef DEBUG
     if (send_mode == SendMode::CONSOLE) {
         std::cout << "ERROR: Console is not allowed unless in DEBUG mode";
@@ -87,8 +86,16 @@ void send(Frame *frame_to_send, SendMode send_mode, int newsockfd, ErrorCorrecti
         char new_data[data_length * 12];
         apply_hamming((unsigned char*) frame_to_send->data, data_length, new_data);
 
+        // Clobber as many bits per frame as the user requested. Reset the clobber flag after every 12 bits since we'll be on a new byte.
+        int number_of_clobbered_bits = 0;
+        int current_byte = 0;
+        bool byte_clobbered = false;
         for (int i = 0; i < data_length * 12; i++) {
-            output_message[24 + i] = new_data[i];
+            if (i % 12 == 0) {
+                current_byte++;
+                byte_clobbered = false;
+            }
+            output_message[24 + i] = get_possibly_clobbered_bit(new_data[i], number_of_clobbered_bits, number_of_bits_to_clobber, byte_clobbered, current_byte, i);
         }
     } else {
         for (int i = 0; i < data_length; i++) {
@@ -102,6 +109,27 @@ void send(Frame *frame_to_send, SendMode send_mode, int newsockfd, ErrorCorrecti
     } else {
         send_through_socket(output_message, get_output_size(data_length, error_correction_mode), newsockfd, error_correction_mode);
     }
+}
+
+char get_possibly_clobbered_bit(char character, int &number_of_clobbered_bits, int number_of_bits_to_clobber, bool &byte_clobbered, int current_byte, int current_bit) {
+    // We don't want to clobber more than one bit per byte, or if we've reached the max per frame
+    if (byte_clobbered || number_of_bits_to_clobber == number_of_clobbered_bits) {
+        return character;
+    }
+
+    bool clobber = (rand() % 100) % 10 == 1;
+
+    if (clobber) {
+        char return_char = character == '0' ? '1' : '0';
+        int bit_flipped = current_bit % 12 == 0 ? 12 : current_bit % 12;
+        std::printf("Flipped bit #%d in byte %d from %d to %d", bit_flipped, current_byte, character - 48, return_char - 48);
+        std::cout << std::endl;
+        byte_clobbered = true;
+        number_of_clobbered_bits++;
+        return return_char;
+    }
+
+    return character;
 }
 
 void append_parity_bits(Frame *frame_to_send, unsigned int data_length) {

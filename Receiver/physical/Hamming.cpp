@@ -31,9 +31,12 @@ void reverse_hamming(char *message, int length, char *returned_data) {
 
         if (syndrome != 0) {
             // There is an error in the message. Correct it by flipping the bit in error.
+            int flipped_bit = i % 12 == 0 ? 12 : i % 12;
             int index = 12 + (i - syndrome);
             index = index < 0 ? -index : index;
             message[index] ^= 1;
+            std::printf("Flipped bit #%d in byte #%d from %d to %d", i, returned_data_index, (message[index] ^ 1) - 48, (message[index]) - 48);
+            std::cout << std::endl;
         }
 
         // Build the byte now that we have checked hamming.

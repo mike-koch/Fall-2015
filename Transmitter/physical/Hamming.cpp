@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include "Hamming.h"
 
 // Takes any char with a value between '0'-'9' and returns the integer value
@@ -72,6 +73,7 @@ char* apply_hamming(unsigned char *original_message, unsigned int length_of_mess
         temp[7] = value + '0';
 
         // The bits are still in MSB to LSB, so flip them
+        bool clobbered_bit_this_frame = false;
         new_data[k] = temp[11];
         new_data[k + 1] = temp[10];
         new_data[k + 2] = temp[9];

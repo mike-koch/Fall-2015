@@ -37,6 +37,7 @@ void read(int sockfd, ErrorCorrection error_correction_mode) {
     bool build_result = build_frame(frame, length, buffer, error_correction_mode);
     if (build_result) {
         output_frame_contents(frame);
+        std::cout << std::endl;
     }
     delete frame;
 }
