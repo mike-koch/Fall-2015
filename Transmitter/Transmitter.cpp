@@ -18,8 +18,8 @@ void process_args(int argc, char *argv[]);
 void connect_to_server(int &sockfd);
 void print_help();
 
-ErrorCorrection error_correction;
-int number_of_bits_to_clobber;
+ErrorCorrection error_correction = ErrorCorrection::NONE;
+int number_of_bits_to_clobber = 0;
 char *file_name;
 char *port_number;
 char *host_name;
@@ -38,10 +38,22 @@ int main(int argc, char *argv[])
 
     std::string message =
             retrieve_file_to_transmit(file_name);
-    for (unsigned int i = 0; i < strlen(message.c_str()); i += number_of_bytes_per_frame) {
+    int number_of_clobbered_bits = 0;
+    for (unsigned int i = 0, number_of_frames = 0; i < strlen(message.c_str()); i += number_of_bytes_per_frame, number_of_frames++) {
         Frame *frame = new Frame();
         build_frame(message.c_str(), i, frame, error_correction);
-        send(frame, sendMode, sockfd, error_correction, number_of_bits_to_clobber, i);
+
+        if (ErrorCorrection::CRC == error_correction) {
+            int should_clobber = (rand() % 100) % 2 == 1
+                              && number_of_clobbered_bits < number_of_bits_to_clobber
+                              && error_correction == ErrorCorrection::CRC;
+            if (should_clobber) {
+                number_of_clobbered_bits++;
+            }
+            send(frame, sendMode, sockfd, error_correction, should_clobber, number_of_frames);
+        } else {
+            send(frame, sendMode, sockfd, error_correction, number_of_bits_to_clobber, number_of_frames);
+        }
         delete frame;
     }
 

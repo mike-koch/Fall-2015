@@ -31,10 +31,12 @@ char get_possibly_clobbered_bit(char character, int &number_of_clobbered_bits, i
  */
 char* append_char_to_output(char *binary_value, char character, unsigned int starting_offset, bool should_clobber, int frame_number) {
     int bit_to_clobber = -1;
+    bool has_clobbered = false;
     if (should_clobber) {
         bit_to_clobber = rand() % 9;
+    } else {
+        has_clobbered = true;
     }
-    bool has_clobbered = false;
     for (int i = 0; i < 8; ++i) {
         int binary_value_as_int = (character >> i & 1);
         char binary_value_as_char = binary_value_as_int + '0';
@@ -109,17 +111,11 @@ void send(Frame *frame_to_send, SendMode send_mode, int newsockfd, ErrorCorrecti
             output_message[24 + i] = get_possibly_clobbered_bit(new_data[i], number_of_clobbered_bits, number_of_bits_to_clobber, byte_clobbered, current_byte, i);
         }
     } else {
-        int number_of_clobbered_bits = 1;
-        bool should_clobber = (rand() % 100) % 10 == 1;
-        if (should_clobber) {
-            number_of_clobbered_bits++;
-        }
         for (int i = 0; i < data_length; i++) {
-            should_clobber = (number_of_bits_to_clobber != number_of_clobbered_bits) && should_clobber;
-            append_char_to_output(output_message, frame_to_send->data[i], 24 + (8 * i), should_clobber, frame_number);
+            append_char_to_output(output_message, frame_to_send->data[i], 24 + (8 * i), number_of_bits_to_clobber, frame_number);
 
             // We should only flip one bit in the frame.
-            should_clobber = false;
+            number_of_bits_to_clobber = 0;
         }
     }
 
