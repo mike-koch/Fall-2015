@@ -130,5 +130,5 @@ void print_help() {
     std::cout << "-a: Error correction using Hamming encoding. This must be consistent with the receiver's error detection/correction mode\n";
     std::cout << "-c: Error detection using CRC. This must be consistent with the receiver's error detection/correction mode\n";
     std::cout << "*** Only -a or -c can be chosen, NOT both. ***\n";
-    std::cout << "-?: Display this help text";
+    std::cout << "-h: Display this help text";
 }
