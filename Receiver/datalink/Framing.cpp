@@ -25,7 +25,7 @@ bool build_frame(Frame *frame, int length, char *data, ErrorCorrection error_cor
     if (error_correction_mode == ErrorCorrection::CRC) {
         uint16_t crc = get_crc_16((unsigned char *) parsed_data, length);
         if (crc != 0) {
-            std::cerr << "ERROR: CRC is not 0. It actually was: " << crc << std::endl;
+            std::cout << ">>> ERROR: CRC was not zero. Skipping frame. <<<" << std::endl;
             return false;
         }
 

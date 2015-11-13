@@ -29,10 +29,21 @@ char get_possibly_clobbered_bit(char character, int &number_of_clobbered_bits, i
  *
  * **NOTE: The binary value is order from least-significant bit to most-significant, going left-to-right!**
  */
-char* append_char_to_output(char *binary_value, char character, unsigned int starting_offset) {
+char* append_char_to_output(char *binary_value, char character, unsigned int starting_offset, bool should_clobber, int frame_number) {
+    int bit_to_clobber = -1;
+    if (should_clobber) {
+        bit_to_clobber = rand() % 9;
+    }
+    bool has_clobbered = false;
     for (int i = 0; i < 8; ++i) {
         int binary_value_as_int = (character >> i & 1);
-        binary_value[i + starting_offset] = binary_value_as_int + '0';
+        char binary_value_as_char = binary_value_as_int + '0';
+        binary_value[i + starting_offset] = binary_value_as_char;
+        if (bit_to_clobber == i && !has_clobbered) {
+            has_clobbered = true;
+            binary_value[i + starting_offset] = binary_value_as_char == '0' ? '1' : '0';
+            printf("Flipped a bit in frame #%d from %d to %d\n", frame_number, binary_value_as_char - 48, binary_value[i + starting_offset] - 48);
+        }
     }
     return binary_value;
 }
@@ -56,7 +67,7 @@ bool check_bit(char &character, int position) {
     return (bool) (character & (1<<(position)));
 }
 
-void send(Frame *frame_to_send, SendMode send_mode, int newsockfd, ErrorCorrection error_correction_mode, int number_of_bits_to_clobber) {
+void send(Frame *frame_to_send, SendMode send_mode, int newsockfd, ErrorCorrection error_correction_mode, int number_of_bits_to_clobber, int frame_number) {
 #ifndef DEBUG
     if (send_mode == SendMode::CONSOLE) {
         std::cout << "ERROR: Console is not allowed unless in DEBUG mode";
@@ -78,9 +89,9 @@ void send(Frame *frame_to_send, SendMode send_mode, int newsockfd, ErrorCorrecti
     }
 
     char output_message[get_output_size(data_length, error_correction_mode)];
-    append_char_to_output(output_message, frame_to_send->first_syn, 0);
-    append_char_to_output(output_message, frame_to_send->second_syn, 8);
-    append_char_to_output(output_message, frame_to_send->length, 16);
+    append_char_to_output(output_message, frame_to_send->first_syn, 0, false, frame_number);
+    append_char_to_output(output_message, frame_to_send->second_syn, 8, false, frame_number);
+    append_char_to_output(output_message, frame_to_send->length, 16, false, frame_number);
 
     if (error_correction_mode == ErrorCorrection::HAMMING) {
         char new_data[data_length * 12];
@@ -98,8 +109,17 @@ void send(Frame *frame_to_send, SendMode send_mode, int newsockfd, ErrorCorrecti
             output_message[24 + i] = get_possibly_clobbered_bit(new_data[i], number_of_clobbered_bits, number_of_bits_to_clobber, byte_clobbered, current_byte, i);
         }
     } else {
+        int number_of_clobbered_bits = 1;
+        bool should_clobber = (rand() % 100) % 10 == 1;
+        if (should_clobber) {
+            number_of_clobbered_bits++;
+        }
         for (int i = 0; i < data_length; i++) {
-            append_char_to_output(output_message, frame_to_send->data[i], 24 + (8 * i));
+            should_clobber = (number_of_bits_to_clobber != number_of_clobbered_bits) && should_clobber;
+            append_char_to_output(output_message, frame_to_send->data[i], 24 + (8 * i), should_clobber, frame_number);
+
+            // We should only flip one bit in the frame.
+            should_clobber = false;
         }
     }
 

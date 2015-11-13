@@ -49,6 +49,9 @@ void setup_socket(int &newsockfd) {
     struct sockaddr_in serv_addr, cli_addr;
 
     fprintf(stderr, "Run client by providing host and port\n----------------------------------------\n");
+    if (error_correction_mode == ErrorCorrection::CRC) {
+        std::cerr << "NOTE: CRC is enabled.  Portions of the message will be omitted if the CRC checksum is not 0." << std::endl;
+    }
     int sockfd = socket(AF_INET, SOCK_STREAM, 0);
     if (sockfd < 0) {
         error("ERROR opening socket");

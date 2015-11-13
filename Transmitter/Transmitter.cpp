@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
     for (unsigned int i = 0; i < strlen(message.c_str()); i += number_of_bytes_per_frame) {
         Frame *frame = new Frame();
         build_frame(message.c_str(), i, frame, error_correction);
-        send(frame, sendMode, sockfd, error_correction, number_of_bits_to_clobber);
+        send(frame, sendMode, sockfd, error_correction, number_of_bits_to_clobber, i);
         delete frame;
     }
 
