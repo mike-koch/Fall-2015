@@ -1,4 +1,4 @@
-#define DEBUG
+//#define DEBUG
 #include <string.h>
 #include <iostream>
 #include <bitset>
@@ -167,7 +167,6 @@ void send_through_socket(char message[], unsigned int size, int newsockfd, Error
     output_to_console(message, size, error_correction_mode);
 #endif
     int n = write(newsockfd, message, size);
-    std::cout << n << std::endl;
     if (n < 0) {
         perror("ERROR: Unable to write to socket");
         exit(ERROR_UNABLE_TO_WRITE_TO_SOCKET);
