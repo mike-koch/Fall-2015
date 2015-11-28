@@ -1,10 +1,11 @@
-//#define DEBUG
+#define DEBUG
 #include <string.h>
 #include <iostream>
 #include <bitset>
 #include <unistd.h>
 #include "TransmissionUtils.h"
 #include "../enum/ErrorCodes.h"
+#include "HDB3Encoder.h"
 #include <fstream>
 #ifndef DEBUG
 #include <stdlib.h>
@@ -74,8 +75,22 @@ void send(Frame *frame_to_send, SendMode send_mode, int newsockfd) {
     append_char_to_output(output_message, frame_to_send->second_syn, 8);
     append_char_to_output(output_message, frame_to_send->length, 16);
 
+    char message[get_output_size(data_length) - 24];
     for (int i = 0; i < data_length; i++) {
+#ifdef DEBUG
         append_char_to_output(output_message, frame_to_send->data[i], 24 + (8 * i));
+#endif
+        append_char_to_output(message, frame_to_send->data[i], 8 * i);
+    }
+
+#ifdef DEBUG
+    output_to_console(output_message, get_output_size(data_length));
+#endif
+    
+    apply_hdb3(message, get_output_size(data_length) - 24);
+
+    for (int i = 24; i < get_output_size(data_length); i++) {
+        output_message[i] = message[i - 24];
     }
 
     if (send_mode == SendMode::CONSOLE) {
@@ -110,7 +125,7 @@ void output_to_console(char message[], unsigned int length) {
         } else if (i % 8 == 0 && i != 0) {
             std::cout << "_";
         }
-        std::cout << (int)message[i];
+        std::cout << message[i];
     }
     std::cout << std::endl;
 }
