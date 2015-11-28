@@ -27,7 +27,7 @@ void apply_hdb3(char *bit_string, int length) {
      *      3b. If the pattern is B00V, B and V are the opposite of the previous pulse.
      */
     int last_violation_position = -1;
-    char last_violation = '-'; // The first violation will always
+    char last_violation = '-'; // The first violation will always be a '-'
     int number_of_zeroes = 0;
 
     for (int i = 0; i < length; i++) {
@@ -45,15 +45,24 @@ void apply_hdb3(char *bit_string, int length) {
 
                 if (number_of_pulses_since_last_violation % 2 == 0) {
                     // Use the B00V pattern
+                    char pulse = last_violation == '-'
+                                     ? '+'
+                                     : '-';
+                    bit_string[i] = pulse;
+                    bit_string[i - 3] = pulse;
+                    last_violation = pulse;
+                    last_violation_position = i;
                 } else {
                     // Use the 000V pattern
+                    bit_string[i] = last_violation;
+                    last_violation_position = i;
                 }
 
 
                 number_of_zeroes = 0;
-                continue;
+            } else {
+                number_of_zeroes++;
             }
-            number_of_zeroes++;
         }
     }
 }
