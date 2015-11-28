@@ -63,6 +63,8 @@ void apply_hdb3(char *bit_string, int length) {
             } else {
                 number_of_zeroes++;
             }
+        } else {
+            number_of_zeroes = 0;
         }
     }
 }
