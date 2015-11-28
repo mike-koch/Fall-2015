@@ -1,6 +1,9 @@
+//#define DEBUG
 #include "ReceivingUtils.h"
 #include "../enum/ErrorCodes.h"
 #include "../datalink/Framing.h"
+#include "HDB3Decoder.h"
+
 void check_for_socket_error(ssize_t n);
 void output_frame_contents(Frame *frame);
 
@@ -23,10 +26,24 @@ void read(int sockfd) {
         if (i != 0 && i % 8 == 0) {
             std::cout << "_";
         }
-        std::cout << (int)(uint8_t)buffer[i];
+        std::cout << buffer[i];
     }
     std::cout << std::endl;
 #endif
+
+    // buffer contains the bit string that needs to be decoded. Reverse HDB3 before building the frame
+    reverse_hdb3(buffer, length_of_buffer);
+
+#ifdef DEBUG
+    for (int i = 0; i < length_of_buffer; i++) {
+        if (i != 0 && i % 8 == 0) {
+            std::cout << "_";
+        }
+        std::cout << buffer[i];
+    }
+    std::cout << std::endl;
+#endif
+
     Frame *frame = new Frame();
     build_frame(frame, length, buffer);
     output_frame_contents(frame);
@@ -42,7 +59,7 @@ int read_for_length(int sockfd) {
     check_for_socket_error(n);
 #ifdef DEBUG
     for (int i = 0; i < 8; i++) {
-        std::cout << (int)(uint8_t)buffer[i];
+        std::cout << buffer[i];
     }
     std::cout << "|";
 #endif
@@ -58,7 +75,7 @@ int read_for_length(int sockfd) {
         }
 #ifdef DEBUG
         for (int i = 0; i < 8; i++) {
-            std::cout << (int)(uint8_t)buffer[i];
+            std::cout << buffer[i];
         }
         std::cout << "|";
 #endif
@@ -74,7 +91,7 @@ int read_for_length(int sockfd) {
             }
 #ifdef DEBUG
             for (int i = 0; i < 8; i++) {
-                std::cout << (int)(uint8_t)buffer[i];
+                std::cout << buffer[i];
             }
             std::cout << "|";
 #endif

@@ -1,7 +1,3 @@
-//
-// Created by mkoch on 11/24/15.
-//
-
 #include "HDB3Encoder.h"
 
 void apply_hdb3(char *bit_string, int length) {

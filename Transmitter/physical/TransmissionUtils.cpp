@@ -1,4 +1,4 @@
-#define DEBUG
+//#define DEBUG
 #include <string.h>
 #include <iostream>
 #include <bitset>
@@ -86,7 +86,7 @@ void send(Frame *frame_to_send, SendMode send_mode, int newsockfd) {
 #ifdef DEBUG
     output_to_console(output_message, get_output_size(data_length));
 #endif
-    
+
     apply_hdb3(message, get_output_size(data_length) - 24);
 
     for (int i = 24; i < get_output_size(data_length); i++) {
