@@ -6,7 +6,7 @@
 #include "physical/ReceivingUtils.h"
 #include "enum/ErrorCodes.h"
 
-void setup_socket(char *const *argv, int &newsockfd);
+void setup_socket(int &newsockfd);
 void error(const char *msg) {
     perror(msg);
     exit(0);
