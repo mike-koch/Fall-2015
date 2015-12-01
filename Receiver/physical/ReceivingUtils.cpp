@@ -8,12 +8,17 @@ void check_for_socket_error(ssize_t n);
 void output_frame_contents(Frame *frame);
 
 void read(int sockfd) {
+    // First we read for the length, by checking for two SYN bits together. Once we get those two, then we know the
+    //    next byte is the length.
     int length = read_for_length(sockfd);
     int current_bytes_read = 0;
 
+    // There are 8 bits per byte, so we need 8 times as much room as the length states
     int length_of_buffer = length * 8;
     char buffer[length_of_buffer];
 
+    // We want to loop until we receive everything, as it is possible that we read faster than the transmitter sends
+    //    the data. If we just go on without double-checking, we might lose some information.
     while (true) {
         current_bytes_read += read(sockfd, buffer + current_bytes_read, (size_t)length_of_buffer - current_bytes_read);
         if (current_bytes_read == length_of_buffer) {

@@ -37,6 +37,7 @@ void reverse_hdb3(char *bit_string, int length) {
     }
 
     // It is possible that we missed some violations. All of the missed ones are 1s, so replace any + or - with 1.
+    // This is truly a hack; however it gets the job done.
     for (int i = 0; i < length; i++) {
         if (bit_string[i] == '+' || bit_string[i] == '-') {
             bit_string[i] = '1';
