@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
     }
 
     std::string message =
-            retrieve_file_to_transmit(argv[3]);
+            retrieve_file_to_transmit(file_name);
     for (unsigned int i = 0; i < strlen(message.c_str()); i += 64) {
         Frame *frame = new Frame();
         build_frame(message.c_str(), i, frame);
