@@ -4,10 +4,14 @@ int get_end_offset(const char *data, unsigned int offset);
 // Takes a char array of the data to be framed, starting at the current offset. Returns the same frame that is passed
 //    in, but populated. Offset is 0-indexed.
 Frame* build_frame(const char *data, unsigned int offset, Frame *frame_to_populate) {
+
+    // We get the end offset through a helper function to prevent accidentally going beyond the end of the string.
     unsigned int end_offset = get_end_offset(data, offset);
     unsigned int length = end_offset - offset;
 
     frame_to_populate->length = length;
+
+    // Just place each byte of data into the frame. Nothing fancy.
     for (int i = 0; i < length; i++) {
         frame_to_populate->data[i] = data[offset + i];
     }

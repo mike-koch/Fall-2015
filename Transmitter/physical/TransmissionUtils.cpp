@@ -55,6 +55,7 @@ void append_parity_bit(char &character) {
     return;
 }
 
+// Simle check to see if a bit is set by ANDing it with 1
 bool check_bit(char &character, int position) {
     return (bool) (character & (1<<(position)));
 }
@@ -67,14 +68,18 @@ void send(Frame *frame_to_send, SendMode send_mode, int newsockfd) {
     }
 #endif
 
+    // Append the parity bits to each character for transmission. This honestly has no utilization besides appending
+    //    it to each character. It is simply stripped by the receiver.
     unsigned int data_length = frame_to_send->length;
     append_parity_bits(frame_to_send, frame_to_send->length);
 
+    // Add each byte to the output message (SYN, SYN, length)
     char output_message[get_output_size(data_length)];
     append_char_to_output(output_message, frame_to_send->first_syn, 0);
     append_char_to_output(output_message, frame_to_send->second_syn, 8);
     append_char_to_output(output_message, frame_to_send->length, 16);
 
+    // Get the encoded bit string of 1's and 0's so we can encode the message using HDB3
     char message[get_output_size(data_length) - 24];
     for (int i = 0; i < data_length; i++) {
 #ifdef DEBUG
@@ -89,10 +94,12 @@ void send(Frame *frame_to_send, SendMode send_mode, int newsockfd) {
 
     apply_hdb3(message, get_output_size(data_length) - 24);
 
+    // Now that the message is encoded, add it to the final message to send to the receiver
     for (int i = 24; i < get_output_size(data_length); i++) {
         output_message[i] = message[i - 24];
     }
 
+    // Output to the proper end, either the console or the socket.
     if (send_mode == SendMode::CONSOLE) {
         output_to_console(output_message, get_output_size(data_length));
     } else {
