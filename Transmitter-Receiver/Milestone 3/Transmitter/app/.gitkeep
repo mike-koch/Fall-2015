@@ -1,0 +1,3 @@
+This folder should contain routines to handle tasks such as reading data to be transmitted from input data file in the
+Transmitter and writing received data into display (or output data file) in the Receiver, as well as any other routines
+that you feel necessary.

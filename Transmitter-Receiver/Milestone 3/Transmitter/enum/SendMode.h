@@ -1,0 +1,7 @@
+#ifndef TRANSMITTER_SENDMODE_H
+#define TRANSMITTER_SENDMODE_H
+enum SendMode {
+    CONSOLE = 1,
+    SOCKET = 2
+};
+#endif //TRANSMITTER_SENDMODE_H
