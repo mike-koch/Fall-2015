@@ -1,0 +1,4 @@
+This folder should contain routines to handle jobs such as converting a character into a binary bit pattern, calculating
+and including a parity bit, executing the cyclic redundancy check and writing bits into an output file
+(i.e., transmission of bits). It should also include routines for reading bits from a file (i.e., reception of bits)
+and converting bits into characters.
